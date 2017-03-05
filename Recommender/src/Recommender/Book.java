@@ -35,6 +35,15 @@ public class Book implements Serializable{
         return title;
     }
     
+    public String setGenre(String newGenre){
+        genre = newGenre;
+        
+    }
+    
+    public String getGenre(){
+        return genre;
+    }
+    
     public ArrayList<String> getTags(){
         return new ArrayList<String>();
     }
@@ -53,6 +62,7 @@ public class Book implements Serializable{
     private String author;
     private String title;
     private String publisher;
+    private String genre;
     private int publishYear;
     private ArrayList<Book> relatedBooks;
 }
