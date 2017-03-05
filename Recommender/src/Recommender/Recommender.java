@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Main;
-
+package Recommender;
 /**
  *
- * @author louis
+ * @author Louis Filip
  */
 public class Recommender {
 
@@ -15,7 +14,7 @@ public class Recommender {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+      mainController MyMainController = new mainController();
+      MyMainController.run();
     }
-    
 }
