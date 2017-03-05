@@ -11,18 +11,34 @@ package Recommender;
  * 
  */
 public class User {
+
+    /**
+     *
+     * @param newName
+     * @param newPassword
+     */
     public User(String newName, String newPassword) {
         name = newName;
         password = newPassword;
     }
     
+    /**
+     * @author Louis F
+     * @return
+     */
     public String getName(){
         return name;
     }
     
+    /**
+     * @author Louis F
+     * @return
+     */
     public String getPassword(){
         return password;
     }
+    
+    
     public String name;
     public String password;
 }

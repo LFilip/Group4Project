@@ -16,7 +16,8 @@ import java.io.*;
 public class Book implements Serializable{
     
     public Book(){
-        
+        this.relatedBooks = new ArrayList<>();
+        this.TAGS = new ArrayList<>();
     }
     
     public void setPublisher(String newPublisher){
@@ -34,6 +35,10 @@ public class Book implements Serializable{
         return title;
     }
     
+    public ArrayList<String> getTags(){
+        return new ArrayList<String>();
+    }
+    
     /**
      *
      * @return
@@ -43,10 +48,11 @@ public class Book implements Serializable{
             return "Book Title: " + title+ ", Publisher: " + publisher
                             + "";
     }
-
+    
+    private ArrayList<String> TAGS;
     private String author;
     private String title;
     private String publisher;
     private int publishYear;
-    private ArrayList<Book> relatedIDs = new ArrayList<Book>();
+    private ArrayList<Book> relatedBooks;
 }

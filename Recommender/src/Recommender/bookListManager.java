@@ -71,13 +71,13 @@ public class bookListManager {
     } 
     
     /**
-     *
+     *@author Louis Filip
      */
     public void printList(){
-        publicBookList.forEach((book) -> {
+        for (Book book : publicBookList){
             System.out.println((publicBookList.indexOf(book) +1) + " :" +
             book.toString());
-        });
+        }
     }
     
     public boolean removeBook(Book book){
