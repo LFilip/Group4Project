@@ -20,49 +20,80 @@ public class Book implements Serializable{
         this.TAGS = new ArrayList<>();
     }
     
+    /**
+     *
+     * @param newPublisher
+     */
     public void setPublisher(String newPublisher){
         publisher = newPublisher;
     }
+
+    /**
+     *
+     * @param newAuthor
+     */
     public void setAuthor(String newAuthor){
         author = newAuthor;
     }
 
+    /**
+     *
+     * @param newTitle
+     */
     public void setTitle(String newTitle){
         title = newTitle;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTitle(){
         return title;
     }
     
-    public String setGenre(String newGenre){
+    /**
+     *
+     * @param newGenre
+     */
+    public void setGenre(String newGenre){
         genre = newGenre;
-        
     }
     
+    /**
+     * 
+     * @return
+     */
     public String getGenre(){
         return genre;
-    }
-    
-    public ArrayList<String> getTags(){
-        return new ArrayList<String>();
     }
     
     /**
      *
      * @return
      */
-    @Override
-    public String toString() {
-            return "Book Title: " + title+ ", Publisher: " + publisher
-                            + "";
+    public ArrayList<String> getTags(){
+        return new ArrayList<String>();
     }
     
+    /**
+     *
+     * @return will return a string to represent this object
+     */
+    @Override
+    public String toString() {
+            return "Book Title: " + title+ ", Author: " + author
+                            + "";
+    }
+   
+    private ArrayList<Integer> starRating;
+    private ArrayList<String> Reviews;
     private ArrayList<String> TAGS;
+    private ArrayList<Book> relatedBooks;
     private String author;
     private String title;
     private String publisher;
     private String genre;
     private int publishYear;
-    private ArrayList<Book> relatedBooks;
+   
 }
