@@ -56,24 +56,55 @@ public class BookDatabase {
         return publicBookList;
     }
     
+    /**
+     *
+     * @return The created book.
+     */
+    
+    //   TODO: Fix the way this does this.
     public Book addBook(){
         System.out.println(ADD_BOOK_TEXT);
         String newTitle = scanner.nextLine();
-        System.out.println("Now enter the Author");
-        String newAuthor = scanner.nextLine();
-        System.out.println("Excellent, now when was it published");
-        int newPublishDate = ioControl.getIntInput();
-        System.out.println("Who published this book");
-        String newPublisher = scanner.nextLine();
-        Book newBook = new Book();
-        newBook.setAuthor(newAuthor);
-        newBook.setTitle(newTitle);
-        newBook.setPublisher(newPublisher);
         
-        publicBookList.add(newBook);
-        saveList();
-        
+            Book newBook = new Book();
+        if(searchByTitle(newTitle) == null){
+            System.out.println("Now enter the Author");
+            String newAuthor = scanner.nextLine();
+
+            System.out.println("Excellent, now when was it published");
+            int newPublishDate = ioControl.getIntInput();
+
+            System.out.println("Who published this book");
+            String newPublisher = scanner.nextLine();
+
+
+            System.out.println("Now enter what genre it is in:");
+            String newGenre = scanner.nextLine();
+
+            System.out.println("Please enter a number rating out of 5");
+            int newReviewNumber = ioControl.getIntInput();       
+            newGenre = newGenre.toLowerCase();
+
+            System.out.println("Now write a short review about it and that should be all we need");
+            String newReview = scanner.nextLine();
+
+
+            newBook.setAuthor(newAuthor);
+            newBook.setTitle(newTitle);
+            newBook.setPublisher(newPublisher);
+            newBook.setGenre(newGenre);
+            newBook.addReview(newReview, newReviewNumber);
+
+            publicBookList.add(newBook);
+            saveList(); 
         return newBook;
+        }
+        else {
+            System.out.println("There is a book already that in the public list:");
+            newBook = searchByTitle(newTitle);
+            return newBook;
+        }
+
     } 
     
     /**
@@ -101,7 +132,9 @@ public class BookDatabase {
          return true;
     }
     
-    
+    public Book getBookAtIndex(int index){
+        return publicBookList.get(index - 1);
+    }
     
     /**
      * @author Louis Filip
@@ -110,6 +143,45 @@ public class BookDatabase {
     public boolean isEmpty(){
         return publicBookList.size() < 1;
     }
+    
+    public void addReviewToBook(Book book){
+        
+    }
+    
+    public Book searchByTitle(String searchTitle){
+        for (Book book : publicBookList){
+            if (book.getTitle() == searchTitle){
+                System.out.println("Book found with title: " + book.getTitle());
+                return book;
+                
+            }
+        }
+        System.out.println("No books found with that title");
+        return null;
+    }
+    
+    public void printBookDetails(int index){
+        index--;
+        Book book = publicBookList.get(index);
+        System.out.println("Details:\n" +
+                "-------------------------------\n" +
+                "Title: " + book.getTitle() + "\nAuthor: " + book.getAuthor());
+        
+        System.out.println("Publisher: " + book.getPublisher() + " Published in: " + book.getYearPublished() + " Genre: " + book.getGenre());
+
+        
+        
+    }
+    
+    public void printBookReviews(int index ){
+        index--;
+    }
+    
+    public void addReview(int index){
+        index--;
+    }
+    
+    
     
     private final IOControl ioControl;
     ArrayList<Book> publicBookList;

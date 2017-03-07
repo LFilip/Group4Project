@@ -36,8 +36,8 @@ public class loginSystem {
             user = userDatabase.find(userName);
             if (user != null){
             System.out.println("Hello, " + user.getName() + " please enter your password:");
-            password = scanner.nextLine();
-            for (int i = 3; i > 0; i++){
+            for (int i = 3; i > 0; i--){
+                password = scanner.nextLine();
                 if(user.getPassword().equals(password)){
                    logIn();
                    return;  // If the User remembers their password.

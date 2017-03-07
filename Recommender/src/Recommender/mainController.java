@@ -55,11 +55,11 @@ public class mainController {
  */
     public boolean userMenuMain(){
         System.out.print(INITIAL_PROMPT);
-        menuControlInt = getIntInput();
+        menuControlInt = getIntInput(6);
         switch (menuControlInt){
             case 1: enterMainList(); break; 
             case 2: enterWishList(); break;
-            case 3: enterRecommendations(); break;
+            case 3: enterPublicList(); break;
             case 4: userProfileChange(); break;
             case 5: login.logOut();return false;
             case 6: System.exit(0);
@@ -75,20 +75,23 @@ public class mainController {
  */    
     public boolean enterMainList(){
         while (menuControlInt != 4){
-            if (BookListManager.isEmpty()){
+            clearScreen();
+            if (user.getBookListSize() == 0){
                 System.out.println("There is nothing here, Please add some books");
             }
             else{
             System.out.println("Here is Your List");
             System.out.println("---------------------------------");
             user.printList();
+            System.out.println();
+            
             }
         System.out.println(USER_MAIN_LIST_TEXT);
-         menuControlInt = getIntInput();
+         menuControlInt = getIntInput(4);
                 switch (menuControlInt){
             case 1: user.addBook(BookListManager.addBook()); UserListManager.saveUsers(); break; // the function addBook also returns the book it created.
             case 2: System.out.println("Select the book to remove:");
-                user.printList();int temp = getIntInput(); user.removeBook(temp);
+                user.printList();int temp = getIntInput(user.getBookListSize()); user.removeBook(temp);
                 UserListManager.saveUsers();break;   
             case 3: BookListManager.printList();
                     UserListManager.saveUsers(); break;
@@ -104,10 +107,33 @@ public class mainController {
  * @return will return true if it ran successfully
  */
     public boolean enterWishList(){
+        while (menuControlInt != 4){
+            clearScreen();
+            if (user.getWishListSize() == 0){
+                System.out.println("There is nothing here, Please add some books");
+            }
+            else if (user.getWishListSize() > 0){
+            System.out.println("Here is Your List");
+            System.out.println("---------------------------------");
+            user.printWishList();
+            System.out.println();
+            
+            
         System.out.println(USER_WISH_LIST_TEXT);
-        menuControlInt = scanner.nextInt();
-        scanner.nextLine();
+         menuControlInt = getIntInput(4);
+                switch (menuControlInt){
+            case 1: user.addBook(BookListManager.addBook()); UserListManager.saveUsers(); break; // the function addBook also returns the book it created.
+            case 2: System.out.println("Select the book to remove:");
+                user.printList();int temp = getIntInput(user.getWishListSize()); user.removeBook(temp);
+                UserListManager.saveUsers();break;   
+            case 3: BookListManager.printList();
+                    UserListManager.saveUsers(); break;
+            case 4: return true;
+        }
+        }
         return true;
+        }
+        return false;
     }
     
 /**
@@ -115,12 +141,30 @@ public class mainController {
  *   This method will let the user interact with their recommendation list
  * @return will return true if it ran successfully
  */
-    public boolean enterRecommendations(){
-        System.out.println(USER_RECOMMENDATION_TEXT);
+    public boolean enterPublicList(){
+        clearScreen();
+        System.out.println(USER_PUBLIC_LIST_TEXT);
+        if (BookListManager.getBookList().size() > 0){
         BookListManager.printList();
-        menuControlInt = getIntInput();
-        scanner.nextLine();
+        int bookIndex = getIntInput(BookListManager.getBookList().size());
+        Book bookAtIndex = BookListManager.getBookAtIndex(bookIndex); // accounts for the 1 off in the actual function
+        System.out.println(USER_PUBLIC_LIST_TEXT_TWO);
+        menuControlInt = getIntInput(5);
+        switch(menuControlInt){
+            case 1: user.addBook(bookAtIndex); UserListManager.saveUsers(); break;
+            case 2: user.addBookWishList(bookAtIndex); UserListManager.saveUsers(); break;
+            case 3: bookAtIndex.printReviews(); break;
+            case 4: enterPublicList(); break;
+            case 5: return true;
+        }
+        
         return true;
+        }
+        else {
+            System.out.println("There are no books in the list yet!");
+            System.out.println("Returning to main menu.");
+            return false;
+        }
     }
     
  /**
@@ -130,27 +174,35 @@ public class mainController {
  */
     public boolean userProfileChange(){
         System.out.println("Feature Coming Soon, Type a Number to return");
-        menuControlInt = getIntInput();
+        menuControlInt = getIntInput(1);
         scanner.nextLine();
         return true;
     }
     
     // Helper function to get an int input instead of anything else (FOR MENU INPUTS)
-   private int getIntInput(){
+   private int getIntInput(int maxNumber){
    int number;
     do {
     System.out.println("Please enter your choice number:");
     while (!scanner.hasNextInt()) {
-        System.out.println("That's not a number!");
+        System.out.println("That's not an option");
         scanner.next(); // this is important!
     }
     number = scanner.nextInt();
-    } while (number <= 0);
+    } while (number <= 0 || number > maxNumber);
     return number;
     }
    
-   
+   // Helper function to clear the screen to make a more pleasing look
+    private void clearScreen(){
+       for (int i = 0; i < 25; i ++){
+           System.out.println("\n");
+       }
+   }
+    
+    
     private final BookDatabase BookListManager;
+    private Book book; 
     private final loginSystem login;
     private final Scanner scanner = new Scanner(System.in);
     private int menuControlInt;
@@ -168,7 +220,7 @@ public class mainController {
           "Welcome to your Main List!\n"
           + "Please Press 1 to Add a Book to Your List\n"
           + "Please Press 2 to Remove a Book from Your List\n"
-          + "Please Press 3 to View Public List\n"
+          + "Please Press 3 to View Book Details\n"
            + "Please Press 4 to Return to the Main Menu";
     
     private static final String USER_WISH_LIST_TEXT = 
@@ -177,11 +229,17 @@ public class mainController {
           + "Please Press 2 to Remove a Book from Your Wish List\n"
           + "Please Press 3 to Return to the Main Menu\n";
     
-    private static final String USER_RECOMMENDATION_TEXT = 
+    private static final String USER_PUBLIC_LIST_TEXT = 
           "Welcome to The Public List!\n"
           + "From here we will find you a new book to read."
            + "\nJust Enter The Number of the Book You Wish To Investigate.";
-        
+    
+    private static final String USER_PUBLIC_LIST_TEXT_TWO = 
+            "Please Press 1 to add this book to your List\n"
+            + "Please Press 2 to add this book to your Wishlist\n"
+            + "Please press 3 to see the reviews of this book\n"
+            + "Please Press 4 to choose another book in the public list\n"
+            + "Please Press 5 to return to main menu";
 
 }
 
