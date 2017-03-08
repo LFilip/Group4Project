@@ -60,9 +60,6 @@ public class IOControl {
      * @return
      */
     public boolean writeUserFile(ArrayList<User> o){
-            for (User user : o){
-                user.printList();
-            }
         try {
             FileOutputStream fileOut =
             new FileOutputStream("UserList.ser");

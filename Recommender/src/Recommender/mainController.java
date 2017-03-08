@@ -22,8 +22,6 @@ public class mainController {
         login = new loginSystem(); 
         UserListManager = UserDatabase.getInstance();
         BookListManager = BookDatabase.getInstance();
- 
-
     }
     
 /**
