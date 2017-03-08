@@ -56,14 +56,6 @@ public class Book implements Serializable{
     public void setTitle(String newTitle){
         title = newTitle;
     }
-
-    /**
-     *
-     * @return
-     */
-    public String getTitle(){
-        return title;
-    }
     
     /**
      *
@@ -72,6 +64,24 @@ public class Book implements Serializable{
     public void setGenre(String newGenre){
         genre = newGenre;
     }
+
+    /**
+     *
+     * @param newPublishYear
+     */
+    public void setPublishYear(int newPublishYear){
+        publishYear = newPublishYear;
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public String getTitle(){
+        return title;
+    }
+    
+
     
     /**
      * 
@@ -99,11 +109,16 @@ public class Book implements Serializable{
                             + "";
     }
     
-    public void addReview(String review, int rating){
-        Reviews.add(review);
-        starRatings.add(rating);
-        System.out.println("Review Added: ");
+    /**
+     *
+     */
+    public void printDetails(){
+        System.out.println("================================================");
+        System.out.println(" Title: " + title + " Author: " + author);
+        System.out.println(" Publisher: " + publisher + " Published in: " + publishYear);
+        System.out.println(" Genre: " + genre );
     }
+  
     
     /**
      *  takes in the created documents and will hold it but will not interact with it.
@@ -111,7 +126,11 @@ public class Book implements Serializable{
      * @param reviewNumber
      * @return
      */
-
+  public void addReview(String review, int reviewNumber){
+        Reviews.add(review);
+        starRatings.add(reviewNumber);
+        System.out.println("Review Added: ");
+    }
    
     public String getAuthor() {
         return author;

@@ -61,7 +61,7 @@ public class BookDatabase {
      * @return The created book.
      */
     
-    //   TODO: Fix the way this does this.
+    //   TODO: Fix the way this does this
     public Book addBook(){
         System.out.println(ADD_BOOK_TEXT);
         String newTitle = scanner.nextLine();
@@ -80,32 +80,49 @@ public class BookDatabase {
 
             System.out.println("Now enter what genre it is in:");
             String newGenre = scanner.nextLine();
+            
 
             System.out.println("Please enter a number rating out of 5");
             int newReviewNumber = ioControl.getIntInput();       
-            newGenre = newGenre.toLowerCase();
+            
 
             System.out.println("Now write a short review about it and that should be all we need");
             String newReview = scanner.nextLine();
 
-
             newBook.setAuthor(newAuthor);
             newBook.setTitle(newTitle);
             newBook.setPublisher(newPublisher);
+            newBook.setPublishYear(newPublishDate);
             newBook.setGenre(newGenre);
             newBook.addReview(newReview, newReviewNumber);
 
             publicBookList.add(newBook);
             saveList(); 
-        return newBook;
+            return newBook;
         }
         else {
             System.out.println("There is a book already that in the public list:");
             newBook = searchByTitle(newTitle);
-            return newBook;
+            newBook.printDetails();
+            System.out.println("\n Would you like to add this book to your list?");
+            System.out.println("Press 1 to add to your list");
+            System.out.println("Press 2 to return to the main menu");
+            int menuControlInt = ioControl.getIntInput();
+            switch(menuControlInt){
+                case 1: return newBook;
+                case 2: return null;
+            }
+            
         }
-
+        return null;
     } 
+    
+    /**
+     *
+     */
+    public void addFromList(){
+        
+    }
     
     /**
      *@author Louis Filip
@@ -150,7 +167,7 @@ public class BookDatabase {
     
     public Book searchByTitle(String searchTitle){
         for (Book book : publicBookList){
-            if (book.getTitle() == searchTitle){
+            if (book.getTitle().equals( searchTitle)){
                 System.out.println("Book found with title: " + book.getTitle());
                 return book;
                 

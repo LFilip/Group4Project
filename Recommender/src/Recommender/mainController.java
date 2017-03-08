@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Recommender;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -91,17 +92,21 @@ public class mainController {
                 switch (menuControlInt){
             case 1: user.addBook(BookListManager.addBook()); UserListManager.saveUsers(); break; // the function addBook also returns the book it created.
             case 2: System.out.println("Select the book to remove:");
-                user.printList();int temp = getIntInput(user.getBookListSize()); user.removeBook(temp);
-                UserListManager.saveUsers();break;   
-            case 3: BookListManager.printList();
-                    UserListManager.saveUsers(); break;
+                    user.printList();int temp = getIntInput(user.getBookListSize()); user.removeBook(temp);
+                    UserListManager.saveUsers();break;   
+            case 3: System.out.println("Which book do you want more information for?");
+                    int bookIndex = getIntInput(user.getBookListSize());
+                    user.searchListByIndex(bookIndex).printDetails();
+                    System.out.println("To continue type anything and press Enter");
+                    scanner.next();
+                     break;
             case 4: return true;
         }
         }
         return true;
     }
  
- /**
+/**
  * @author Louis Filip
  *   This method will let the user interact with their Wish list
  * @return will return true if it ran successfully
@@ -137,6 +142,39 @@ public class mainController {
     }
     
 /**
+*  TODO:  This whole thing
+     * @param searchCatagory
+* @return
+*/
+    public boolean enterRecommendationList(int searchCatagory){
+        
+        return false;
+        
+    }{
+    
+    }
+    
+    
+    public void viewSimilarBooks(String genre){
+        ArrayList<Book> similarList;
+        similarList = new ArrayList<>() ;
+        for (int i = 1; i < BookListManager.getBookList().size();i++){
+            if (BookListManager.getBookAtIndex(i).getGenre().equals(genre)){
+                similarList.add(BookListManager.getBookAtIndex(i));
+            }
+        }
+        
+       
+        if (similarList.size() == 0){
+            System.out.println("There are no books similar to this book.  If you know one enter it in your list!");
+            
+        } else {
+            for (Book book: similarList){
+                book.printDetails();
+            }
+        }
+    }
+/**
  * @author Louis Filip
  *   This method will let the user interact with their recommendation list
  * @return will return true if it ran successfully
@@ -148,6 +186,7 @@ public class mainController {
         BookListManager.printList();
         int bookIndex = getIntInput(BookListManager.getBookList().size());
         Book bookAtIndex = BookListManager.getBookAtIndex(bookIndex); // accounts for the 1 off in the actual function
+        bookAtIndex.printDetails();
         System.out.println(USER_PUBLIC_LIST_TEXT_TWO);
         menuControlInt = getIntInput(5);
         switch(menuControlInt){
@@ -155,7 +194,8 @@ public class mainController {
             case 2: user.addBookWishList(bookAtIndex); UserListManager.saveUsers(); break;
             case 3: bookAtIndex.printReviews(); break;
             case 4: enterPublicList(); break;
-            case 5: return true;
+            case 5: clearScreen(); viewSimilarBooks(bookAtIndex.getGenre());
+            case 6: return true;
         }
         
         return true;
@@ -239,6 +279,7 @@ public class mainController {
             + "Please Press 2 to add this book to your Wishlist\n"
             + "Please press 3 to see the reviews of this book\n"
             + "Please Press 4 to choose another book in the public list\n"
+            + "Please Press 5 to view similar books\n"
             + "Please Press 5 to return to main menu";
 
 }
