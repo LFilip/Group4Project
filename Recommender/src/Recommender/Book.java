@@ -13,7 +13,7 @@ import java.io.*;
  *
  * @author louis
  */
-public class Book implements Serializable{
+public class Book extends Media implements Serializable {
     
     
     private ArrayList<Integer> starRatings;

@@ -7,13 +7,12 @@ package Recommender;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author Louis Filip
  */
 public class loginSystem {
-
+    LoginGuiController loginGui;
     private final IOControl ioControl;
     
     public loginSystem(){
@@ -21,12 +20,23 @@ public class loginSystem {
         loggedIn = false;
         userDatabase = UserDatabase.getInstance();
         ioControl = IOControl.getInstance();
+        loginGui = new LoginGuiController();
     }
     
     /**
      *
      */
     public void loginMenu(){
+        loginWithGui();
+        loginGui.setVisible(true);
+        
+        if (loginGui.isAuthenticated()){
+            logIn();
+            return;
+        }
+        
+        
+        
         System.out.println("Hello and welcome to the Recommender.");
         System.out.println("To Login type 1 and to create an accout type 2:");
         menuControlInt = ioControl.getIntInput();
@@ -57,6 +67,13 @@ public class loginSystem {
         }
     }
     
+    
+    private boolean loginWithGui(){
+        loginGui.setVisible(true);
+        
+        return true;
+    }
+    
     public boolean isLoggedIn(){
         return loggedIn;
     }
@@ -69,6 +86,7 @@ public class loginSystem {
     public void logIn(){
         loggedIn = true;
         System.out.println("You are now logged in!\n");
+        loginGui.setVisible(false);
     }
     
 /**

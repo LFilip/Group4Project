@@ -33,8 +33,8 @@ public class IOControl {
     
     /**
      *
-     * @param o
-     * @return
+     * @param o This parameter is a seriealizable object
+     * @return true if it worked and false if it failed
      */
     public boolean writeBookFile(Object o){
 
@@ -49,6 +49,7 @@ public class IOControl {
          }catch(IOException i) {
             System.out.println("This didnt work");
             i.printStackTrace();
+            return false;
          }
 
         return true;

@@ -12,7 +12,7 @@ import java.io.*;
  *
  * @author Louis F
  */
-public class BookDatabase {
+public class BookDatabase extends MediaDatabase {
     
     private static BookDatabase myBookList;
     
