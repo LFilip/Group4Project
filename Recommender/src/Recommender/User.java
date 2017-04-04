@@ -48,16 +48,16 @@ public class User implements Serializable {
     
     /**
      *
-     * @param book
+     * @param media
      */
-    public void addBook(Book book){
-        if(searchListByTitle(book.getTitle()) != null){
+    public void addBook(Media media){
+        if(searchListByTitle(media.getTitle()) != null){
             System.out.println("This book is already in your list");
             return;
         }
         
-        myBookList.add(book);
-        System.out.println("The book " + book.getTitle() + " has been added to your list.");
+        myBookList.add(media);
+        System.out.println("The book " + media.getTitle() + " has been added to your list.");
     }
     
     
@@ -76,7 +76,7 @@ public class User implements Serializable {
      *
      * @param book
      */
-    public void addBookWishList(Book book){
+    public void addBookWishList(Media book){
         myWishList.add(book);
         System.out.println("The book " + book.getTitle() + " has been added to your Wishlist.");
    }
@@ -119,7 +119,7 @@ public class User implements Serializable {
      *
      */
     public void printBooks(){
-        for (Book book : myBookList){
+        for (Media book : myBookList){
             System.out.println(book);
         }
     }
@@ -129,8 +129,8 @@ public class User implements Serializable {
      * @param searchTitle
      * @return
      */
-    public Book searchListByTitle(String searchTitle){
-        for (Book book : myBookList){
+    public Media searchListByTitle(String searchTitle){
+        for (Media book : myBookList){
             if (book.getTitle().equals( searchTitle)){
                 System.out.println("Book found with title: " + book.getTitle());
                 return book;
@@ -141,14 +141,14 @@ public class User implements Serializable {
         return null;
     }
     
-    public Book searchListByIndex(int index ){
+    public Media searchListByIndex(int index ){
         index --;
         return myBookList.get(index);
     }
     
     private int idNumber;
-    private ArrayList<Book> myWishList;
-    private ArrayList<Book> myBookList;
+    private ArrayList<Media> myWishList;
+    private ArrayList<Media> myBookList;
     private String name;
     private String password;
 }

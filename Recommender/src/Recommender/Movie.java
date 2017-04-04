@@ -10,5 +10,4 @@ package Recommender;
  * @author louis
  */
 public class Movie extends Media {
-    
 }

@@ -20,7 +20,7 @@ public class BookDatabase extends MediaDatabase {
      * @author Louis Filip
      * 
      */
-    private BookDatabase(){
+    public BookDatabase(){
         this.ADD_BOOK_TEXT = "You have selected Add a Book\n"
                 + "Please enter the Title of the new book";
         this.scanner = new Scanner(System.in);
@@ -52,7 +52,7 @@ public class BookDatabase extends MediaDatabase {
      * @author Louis Filip
      * @return returns a list of all the public books
      */
-    public ArrayList<Book> getBookList(){
+    public ArrayList<Media> getMediaList(){
         return publicBookList;
     }
     
@@ -62,11 +62,11 @@ public class BookDatabase extends MediaDatabase {
      */
     
     //   TODO: Fix the way this does this
-    public Book addBook(){
+    public Media addBook(){
         System.out.println(ADD_BOOK_TEXT);
         String newTitle = scanner.nextLine();
         
-            Book newBook = new Book();
+            Media newBook = new Media();
         if(searchByTitle(newTitle) == null){
             System.out.println("Now enter the Author");
             String newAuthor = scanner.nextLine();
@@ -128,7 +128,7 @@ public class BookDatabase extends MediaDatabase {
      *@author Louis Filip
      */
     public void printList(){
-        for (Book book : publicBookList){
+        for (Media book : publicBookList){
             System.out.println((publicBookList.indexOf(book) +1) + " :" +
             book.toString());
         }
@@ -149,7 +149,7 @@ public class BookDatabase extends MediaDatabase {
          return true;
     }
     
-    public Book getBookAtIndex(int index){
+    public Media getBookAtIndex(int index){
         return publicBookList.get(index - 1);
     }
     
@@ -165,8 +165,8 @@ public class BookDatabase extends MediaDatabase {
         
     }
     
-    public Book searchByTitle(String searchTitle){
-        for (Book book : publicBookList){
+    public Media searchByTitle(String searchTitle){
+        for (Media book : publicBookList){
             if (book.getTitle().equals( searchTitle)){
                 System.out.println("Book found with title: " + book.getTitle());
                 return book;
@@ -179,7 +179,7 @@ public class BookDatabase extends MediaDatabase {
     
     public void printBookDetails(int index){
         index--;
-        Book book = publicBookList.get(index);
+        Media book = publicBookList.get(index);
         System.out.println("Details:\n" +
                 "-------------------------------\n" +
                 "Title: " + book.getTitle() + "\nAuthor: " + book.getAuthor());
@@ -201,7 +201,7 @@ public class BookDatabase extends MediaDatabase {
     
     
     private final IOControl ioControl;
-    ArrayList<Book> publicBookList;
+    ArrayList<Media> publicBookList;
     Scanner scanner;
     private final String ADD_BOOK_TEXT;
 }

@@ -21,7 +21,7 @@ public class mainController {
     public mainController() {
         login = new loginSystem(); 
         UserListManager = UserDatabase.getInstance();
-        BookListManager = BookDatabase.getInstance();
+        BookListManager = MediaDatabase.getInstance();
     }
     
 /**
@@ -154,9 +154,9 @@ public class mainController {
     
     
     public void viewSimilarBooks(String genre){
-        ArrayList<Book> similarList;
+        ArrayList<Media> similarList;
         similarList = new ArrayList<>() ;
-        for (int i = 1; i < BookListManager.getBookList().size();i++){
+        for (int i = 1; i < BookListManager.getMediaList().size();i++){
             if (BookListManager.getBookAtIndex(i).getGenre().equals(genre)){
                 similarList.add(BookListManager.getBookAtIndex(i));
             }
@@ -167,7 +167,7 @@ public class mainController {
             System.out.println("There are no books similar to this book.  If you know one enter it in your list!");
             
         } else {
-            for (Book book: similarList){
+            for (Media book: similarList){
                 book.printDetails();
             }
         }
@@ -180,10 +180,10 @@ public class mainController {
     public boolean enterPublicList(){
         clearScreen();
         System.out.println(USER_PUBLIC_LIST_TEXT);
-        if (BookListManager.getBookList().size() > 0){
+        if (BookListManager.getMediaList().size() > 0){
         BookListManager.printList();
-        int bookIndex = getIntInput(BookListManager.getBookList().size());
-        Book bookAtIndex = BookListManager.getBookAtIndex(bookIndex); // accounts for the 1 off in the actual function
+        int bookIndex = getIntInput(BookListManager.getMediaList().size());
+        Media bookAtIndex = BookListManager.getBookAtIndex(bookIndex); // accounts for the 1 off in the actual function
         bookAtIndex.printDetails();
         System.out.println(USER_PUBLIC_LIST_TEXT_TWO);
         menuControlInt = getIntInput(5);
@@ -239,7 +239,7 @@ public class mainController {
    }
     
     
-    private final BookDatabase BookListManager;
+    private final MediaDatabase BookListManager;
     private Book book; 
     private final loginSystem login;
     private final Scanner scanner = new Scanner(System.in);

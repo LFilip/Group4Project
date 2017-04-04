@@ -36,8 +36,8 @@ public class IOControl {
      * @param o This parameter is a seriealizable object
      * @return true if it worked and false if it failed
      */
-    public boolean writeBookFile(Object o){
-
+    public boolean writeBookFile(ArrayList<Media> o){
+    
         try {
             FileOutputStream fileOut =
             new FileOutputStream("BookList.ser");
@@ -108,14 +108,14 @@ public class IOControl {
     
     
     
-    public ArrayList<Book> readBookFile(){
+    public ArrayList<Media> readBookFile(){
        System.out.println("Attempting to find BookList.ser");
        File f = new File("BookList.ser");
        if (f.isFile()){
        try {
          FileInputStream fileIn = new FileInputStream(f);
          ObjectInputStream in = new ObjectInputStream(fileIn);
-         publicBookList = (ArrayList<Book>) in.readObject();
+         publicBookList = (ArrayList<Media>) in.readObject();
          System.out.println("BookList.Ser Opened Sucessfully");
          in.close();
          fileIn.close();
@@ -146,5 +146,5 @@ public class IOControl {
     
     Scanner scanner;
      ArrayList<User> userList;
-     ArrayList<Book> publicBookList;
+     ArrayList<Media> publicBookList;
 }

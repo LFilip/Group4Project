@@ -9,6 +9,5 @@ package Recommender;
  *
  * @author louis
  */
-public class Music extends Media{
-    
+class Music extends Media {
 }

@@ -9,6 +9,6 @@ package Recommender;
  *
  * @author louis
  */
-public class MovieDatabase extends MediaDatabase {
-    
+class VideoGame {
+
 }
