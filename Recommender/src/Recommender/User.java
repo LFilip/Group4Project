@@ -7,6 +7,11 @@ package Recommender;
 
 import java.util.ArrayList;
 import java.io.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Group 4
@@ -25,6 +30,7 @@ public class User implements Serializable {
     public User(String newName, String newPassword, int newIDnumber) {
         myBookList = new ArrayList<>();
         myWishList = new ArrayList<>();
+        myPreferenceList = new ArrayList<>();
         name = newName;
         password = newPassword;
         idNumber = newIDnumber;
@@ -50,7 +56,7 @@ public class User implements Serializable {
      *
      * @param media
      */
-    public void addBook(Media media){
+    public void addMedia(Media media){
         if(searchListByTitle(media.getTitle()) != null){
             System.out.println("This book is already in your list");
             return;
@@ -60,6 +66,29 @@ public class User implements Serializable {
         System.out.println("The book " + media.getTitle() + " has been added to your list.");
     }
     
+    /**
+     *
+     * @return will return a list of top favorites.
+     */
+    public ArrayList<String> generateTopTags(){
+        final Map<String, Integer> counter = new HashMap<String, Integer>();
+        
+        for (Media media: myBookList){
+            for (String str : media.getTags())
+                counter.put(str, 1 + (counter.containsKey(str) ? counter.get(str) : 0));
+
+            myPreferenceList = new ArrayList<String>(counter.keySet());
+
+            Collections.sort(myPreferenceList, new Comparator<String>() {
+                @Override
+                public int compare(String x, String y) {
+                    return counter.get(y) - counter.get(x);
+                }
+            });
+        }
+        
+        return myPreferenceList;
+    }
     
     /**
      *
@@ -76,9 +105,9 @@ public class User implements Serializable {
      *
      * @param book
      */
-    public void addBookWishList(Media book){
-        myWishList.add(book);
-        System.out.println("The book " + book.getTitle() + " has been added to your Wishlist.");
+    public void addMediaWishList(Media media){
+        myWishList.add(media);
+        System.out.println("The media " + media.getTitle() + " has been added to your Wishlist.");
    }
     
     /**
@@ -86,7 +115,7 @@ public class User implements Serializable {
      */
     public void printList(){
         for (int i = 0; i < myBookList.size();i++){
-            System.out.println("Book: " +(i + 1) + " " + myBookList.get(i));
+            System.out.println("Media: " +(i + 1) + " " + myBookList.get(i));
         }
     }
     
@@ -95,7 +124,7 @@ public class User implements Serializable {
      */
     public void printWishList(){
             for (int i = 0; i < myWishList.size();i++){
-            System.out.println("Book: " +(i + 1) + " " + myBookList.get(i));
+            System.out.println("Media: " +(i + 1) + " " + myBookList.get(i));
         }
     }
     
@@ -115,13 +144,8 @@ public class User implements Serializable {
         return myWishList.size();
     }
     
-    /**
-     *
-     */
-    public void printBooks(){
-        for (Media book : myBookList){
-            System.out.println(book);
-        }
+    public ArrayList<Media> getUserMediaList(){
+        return myBookList;
     }
     
     /**
@@ -132,12 +156,12 @@ public class User implements Serializable {
     public Media searchListByTitle(String searchTitle){
         for (Media book : myBookList){
             if (book.getTitle().equals( searchTitle)){
-                System.out.println("Book found with title: " + book.getTitle());
+                System.out.println("Media found with title: " + book.getTitle());
                 return book;
                 
             }
         }
-        System.out.println("No books found with that title");
+        System.out.println("No Media found with that title");
         return null;
     }
     
@@ -149,6 +173,7 @@ public class User implements Serializable {
     private int idNumber;
     private ArrayList<Media> myWishList;
     private ArrayList<Media> myBookList;
+    private ArrayList<String> myPreferenceList;
     private String name;
     private String password;
 }

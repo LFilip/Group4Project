@@ -21,7 +21,7 @@ public class mainController {
     public mainController() {
         login = new loginSystem(); 
         UserListManager = UserDatabase.getInstance();
-        BookListManager = MediaDatabase.getInstance();
+        MediaListManager = MediaDatabase.getInstance();
     }
     
 /**
@@ -88,7 +88,7 @@ public class mainController {
         System.out.println(USER_MAIN_LIST_TEXT);
          menuControlInt = getIntInput(4);
                 switch (menuControlInt){
-            case 1: user.addBook(BookListManager.addBook()); UserListManager.saveUsers(); break; // the function addBook also returns the book it created.
+            case 1: user.addMedia(MediaListManager.addMedia()); UserListManager.saveUsers(); break; // the function addMedia also returns the book it created.
             case 2: System.out.println("Select the book to remove:");
                     user.printList();int temp = getIntInput(user.getBookListSize()); user.removeBook(temp);
                     UserListManager.saveUsers();break;   
@@ -125,11 +125,11 @@ public class mainController {
         System.out.println(USER_WISH_LIST_TEXT);
          menuControlInt = getIntInput(4);
                 switch (menuControlInt){
-            case 1: user.addBook(BookListManager.addBook()); UserListManager.saveUsers(); break; // the function addBook also returns the book it created.
+            case 1: user.addMedia(MediaListManager.addMedia()); UserListManager.saveUsers(); break; // the function addMedia also returns the book it created.
             case 2: System.out.println("Select the book to remove:");
                 user.printList();int temp = getIntInput(user.getWishListSize()); user.removeBook(temp);
                 UserListManager.saveUsers();break;   
-            case 3: BookListManager.printList();
+            case 3: MediaListManager.printList();
                     UserListManager.saveUsers(); break;
             case 4: return true;
         }
@@ -156,9 +156,9 @@ public class mainController {
     public void viewSimilarBooks(String genre){
         ArrayList<Media> similarList;
         similarList = new ArrayList<>() ;
-        for (int i = 1; i < BookListManager.getMediaList().size();i++){
-            if (BookListManager.getBookAtIndex(i).getGenre().equals(genre)){
-                similarList.add(BookListManager.getBookAtIndex(i));
+        for (int i = 1; i < MediaListManager.getMediaList().size();i++){
+            if (MediaListManager.getBookAtIndex(i).getGenre().equals(genre)){
+                similarList.add(MediaListManager.getBookAtIndex(i));
             }
         }
         
@@ -180,20 +180,22 @@ public class mainController {
     public boolean enterPublicList(){
         clearScreen();
         System.out.println(USER_PUBLIC_LIST_TEXT);
-        if (BookListManager.getMediaList().size() > 0){
-        BookListManager.printList();
-        int bookIndex = getIntInput(BookListManager.getMediaList().size());
-        Media bookAtIndex = BookListManager.getBookAtIndex(bookIndex); // accounts for the 1 off in the actual function
+        if (MediaListManager.getMediaList().size() > 0){
+        MediaListManager.printList();
+        int bookIndex = getIntInput(MediaListManager.getMediaList().size());
+        Media bookAtIndex = MediaListManager.getBookAtIndex(bookIndex); // accounts for the 1 off in the actual function
         bookAtIndex.printDetails();
         System.out.println(USER_PUBLIC_LIST_TEXT_TWO);
-        menuControlInt = getIntInput(5);
+        menuControlInt = getIntInput(8);
         switch(menuControlInt){
-            case 1: user.addBook(bookAtIndex); UserListManager.saveUsers(); break;
-            case 2: user.addBookWishList(bookAtIndex); UserListManager.saveUsers(); break;
+            case 1: user.addMedia(bookAtIndex); UserListManager.saveUsers(); break;
+            case 2: user.addMediaWishList(bookAtIndex); UserListManager.saveUsers(); break;
             case 3: bookAtIndex.printReviews(); break;
             case 4: enterPublicList(); break;
-            case 5: clearScreen(); viewSimilarBooks(bookAtIndex.getGenre());
+            case 5: clearScreen(); viewSimilarBooks(bookAtIndex.getGenre()); break;
             case 6: return true;
+            case 7: MediaListManager.addTags(bookAtIndex); break;
+            case 8: userPreferenceList = user.generateTopTags(); getRec(); break;
         }
         
         return true;
@@ -219,16 +221,16 @@ public class mainController {
     
     // Helper function to get an int input instead of anything else (FOR MENU INPUTS)
    private int getIntInput(int maxNumber){
-   int number;
-    do {
-    System.out.println("Please enter your choice number:");
-    while (!scanner.hasNextInt()) {
-        System.out.println("That's not an option");
-        scanner.next(); // this is important!
-    }
-    number = scanner.nextInt();
-    } while (number <= 0 || number > maxNumber);
-    return number;
+    int number;
+     do {
+     System.out.println("Please enter your choice number:");
+     while (!scanner.hasNextInt()) {
+         System.out.println("That's not an option");
+         scanner.next(); // this is important!
+     }
+     number = scanner.nextInt();
+     } while (number <= 0 || number > maxNumber);
+     return number;
     }
    
    // Helper function to clear the screen to make a more pleasing look
@@ -238,9 +240,24 @@ public class mainController {
        }
    }
     
+    private void getRec(){
+        recommendationList = new ArrayList<>();
+        
+        recommendationList = MediaListManager.getListByTags(userPreferenceList);
+        
+        System.out.println("Here are your Recommendations");
+        for (Media media : recommendationList){
+            if (!user.getUserMediaList().contains(media)){
+            System.out.println("Media: ");
+            System.out.println(media.getTitle());
+            }
+        }
+    }
     
-    private final MediaDatabase BookListManager;
-    private Book book; 
+    
+    private ArrayList<Media> recommendationList;
+    private ArrayList<String> userPreferenceList;
+    private final MediaDatabase MediaListManager;
     private final loginSystem login;
     private final Scanner scanner = new Scanner(System.in);
     private int menuControlInt;
@@ -278,7 +295,9 @@ public class mainController {
             + "Please press 3 to see the reviews of this book\n"
             + "Please Press 4 to choose another book in the public list\n"
             + "Please Press 5 to view similar books\n"
-            + "Please Press 5 to return to main menu";
+            + "Please Press 6 to return to main menu"
+            + "Please Press 7 to add tags";
+    
 
 }
 

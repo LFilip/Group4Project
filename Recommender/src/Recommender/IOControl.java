@@ -144,6 +144,19 @@ public class IOControl {
     return actNum;
     }
     
+    public int getIntInput(int maxNum){
+    int number;
+    do {
+    System.out.println("Please enter your choice number:");
+    while (!scanner.hasNextInt()) {
+        System.out.println("That's not an option");
+        scanner.next(); // this is important!
+    }
+    number = scanner.nextInt();
+    } while (number <= 0 || number > maxNum);
+    return number;
+    }
+    
     Scanner scanner;
      ArrayList<User> userList;
      ArrayList<Media> publicBookList;

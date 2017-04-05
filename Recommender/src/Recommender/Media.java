@@ -16,7 +16,7 @@ public class Media implements Serializable {
     protected ArrayList<Integer> starRatings;
     protected ArrayList<String> Reviews;
     protected ArrayList<String> TAGS;
-    protected ArrayList<Book> relatedBooks;
+    protected ArrayList<Media> relatedMedia;
     protected String author;
     protected String title;
     protected String publisher;
@@ -25,7 +25,7 @@ public class Media implements Serializable {
 
     
      public Media(){
-        this.relatedBooks = new ArrayList<>();
+        this.relatedMedia = new ArrayList<>();
         this.TAGS = new ArrayList<>();
         this.Reviews = new ArrayList<>();
         this.starRatings = new ArrayList<>();
@@ -34,10 +34,16 @@ public class Media implements Serializable {
      
     void printDetails() {
         System.out.println(title);
+        for (String review: Reviews){
+            System.out.println(review);
+        }
     }
 
     void printReviews() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        for (String review: Reviews){
+        System.out.println(review);
+        }
     }
     protected enum Type{
         Book, Movie, VideoGame, Music
@@ -143,6 +149,18 @@ public class Media implements Serializable {
      */
     public ArrayList<String> getTags(){
         return TAGS;
+    }
+    
+    public void addTag(String newTag){
+        TAGS.add(newTag);
+    }
+    
+   
+    @Override
+    public String toString() {
+        String tempString = new String();
+        tempString = "Title: " + title + " Published: " + publishYear +" Created By: " + author ;
+        return tempString; 
     }
     
       public void addReview(String review, int reviewNumber){

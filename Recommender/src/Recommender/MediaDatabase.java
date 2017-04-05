@@ -59,7 +59,7 @@ public class MediaDatabase {
      */
     
     //   TODO: Fix the way this does this
-    public Media addBook(){
+    public Media addMedia(){
         System.out.println(ADD_BOOK_TEXT);
         String newTitle = scanner.nextLine();
         
@@ -82,6 +82,8 @@ public class MediaDatabase {
             System.out.println("Please enter a number rating out of 5");
             int newReviewNumber = ioControl.getIntInput();       
             
+
+            addTags(newBook);
 
             System.out.println("Now write a short review about it and that should be all we need");
             String newReview = scanner.nextLine();
@@ -114,7 +116,40 @@ public class MediaDatabase {
         return null;
     } 
     
+    /**
+     *
+     * @param searchTags
+     * @return
+     */
+    public ArrayList<Media> getListByTags(ArrayList<String> searchTags){
+        ArrayList<Media> tempList = new ArrayList<>();
+
+        for(Media media : publicMediaList){
+            for(String mediaTags: media.getTags()){
+                for(String userTags : searchTags){
+                    if( userTags.equals(mediaTags)){
+                        if (!tempList.contains(media)){
+                        tempList.add(media);
+                        }
+                    }
+                }
+            }
+        }
+        return tempList;
+    }
     
+    public void addTags(Media media){
+                    Boolean more = true;
+            
+            while(more){
+               System.out.println("Now enter a tag");
+               media.addTag(scanner.nextLine());
+               System.out.println("would you like to add another one? n to continue");
+               if (scanner.nextLine().equals("n")){
+                   more = false;
+               }
+            }
+    }
  
     /**
      *
