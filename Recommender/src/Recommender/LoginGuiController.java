@@ -11,20 +11,18 @@ package Recommender;
  * @author louis
  */
 public class LoginGuiController extends javax.swing.JFrame {
-    UserDatabase userDatabase;
-    User user;
-    String password;
-    String userName;
-    Boolean authenticated = false;
-    
+
     
     /**
-     * Creates new form LoginGui
-     */
-    public LoginGuiController() {
+    * Creates new form LoginGui
+    */
+    public LoginGuiController(){
         initComponents();
         userDatabase = UserDatabase.getInstance();
+        MainGuiController = MainGuiController.getInstance();
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,9 +37,9 @@ public class LoginGuiController extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jPasswordField1 = new javax.swing.JPasswordField();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        loginBTN = new javax.swing.JButton();
+        exitBTN = new javax.swing.JButton();
+        createAccountBTN = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         responseLabel = new javax.swing.JLabel();
@@ -53,29 +51,25 @@ public class LoginGuiController extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Recommender Login Required");
 
-        jPasswordField1.setText("Pass");
-
-        jTextField1.setText("Enter User Name");
-
-        jButton1.setText("Login");
-        jButton1.setToolTipText("");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        loginBTN.setText("Login");
+        loginBTN.setToolTipText("");
+        loginBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                loginBTNActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Exit");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        exitBTN.setText("Exit");
+        exitBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                exitBTNActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Create Account");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        createAccountBTN.setText("Create Account");
+        createAccountBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                createAccountBTNActionPerformed(evt);
             }
         });
 
@@ -102,11 +96,11 @@ public class LoginGuiController extends javax.swing.JFrame {
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3)
+                                .addComponent(createAccountBTN)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)
+                                .addComponent(loginBTN)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)))
+                                .addComponent(exitBTN)))
                         .addGap(0, 20, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -125,23 +119,23 @@ public class LoginGuiController extends javax.swing.JFrame {
                 .addComponent(responseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(40, 40, 40))
+                    .addComponent(createAccountBTN)
+                    .addComponent(loginBTN)
+                    .addComponent(exitBTN))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
     // this method is for when the exit button is clicked
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void exitBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBTNActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_exitBTNActionPerformed
 
     
     //  This is what happens when the login button is clicked
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void loginBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBTNActionPerformed
         // TODO add your handling code here:
         responseLabel.setText("You Clicked it!");
         user = userDatabase.find(jTextField1.getText());
@@ -153,6 +147,9 @@ public class LoginGuiController extends javax.swing.JFrame {
                 if(user.getPassword().equals(passText)){
                    authenticated = true;
                    responseLabel.setText("Logged in");
+                   MainGuiController.setVisible(true);
+                   MainGuiController.openMyList();
+                   this.setVisible(false);
                    return;  // If the User remembers their password.
                 }
                 else {
@@ -163,13 +160,15 @@ public class LoginGuiController extends javax.swing.JFrame {
         else {
             responseLabel.setText("The Username or Password is incorrect");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_loginBTNActionPerformed
 
     
     // this method is for when the create account button is pressed.
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void createAccountBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountBTNActionPerformed
+       userFactoryGui = new UserFactoryGui();
+       userFactoryGui.setVisible(true);
+       this.setVisible(false);
+    }//GEN-LAST:event_createAccountBTNActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,6 +197,12 @@ public class LoginGuiController extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -206,17 +211,25 @@ public class LoginGuiController extends javax.swing.JFrame {
             }
         });
     }
+    
 
+    UserDatabase userDatabase;
+    User user;
+    String password;
+    String userName;
+    Boolean authenticated = false;
+    private UserFactoryGui userFactoryGui;
+    private MainGuiController MainGuiController;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton createAccountBTN;
+    private javax.swing.JButton exitBTN;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton loginBTN;
     private javax.swing.JLabel responseLabel;
     // End of variables declaration//GEN-END:variables
 

@@ -66,6 +66,13 @@ public class UserDatabase  {
         return userDatabase;
     }
     
+    public void createUser(String newUserName, String newUserPassword){
+        user = new User(newUserName, newUserPassword, userList.size() + 1);
+        userList.add(user);
+        ioControl.writeUserFile(userList);
+    }
+    
+    
     
     public void createUser(){
             System.out.println("Now we will create account.  Enter the name you want");

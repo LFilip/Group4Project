@@ -11,16 +11,16 @@ import java.util.ArrayList;
  *
  * @author Louis Filip
  */
-public class loginSystem {
-    LoginGuiController loginGui;
-    private final IOControl ioControl;
+public class LoginSystem {
     
-    public loginSystem(){
+    
+    public LoginSystem(){
         this.scanner = new Scanner(System.in);
         loggedIn = false;
         userDatabase = UserDatabase.getInstance();
         ioControl = IOControl.getInstance();
         loginGui = new LoginGuiController();
+        loginWithGui();
     }
     
     /**
@@ -28,8 +28,11 @@ public class loginSystem {
      */
     public void loginMenu(){
         loginWithGui();
-        loginGui.setVisible(true);
-        
+
+
+        while (!loginGui.isAuthenticated()){
+            System.out.println("");
+        }
         if (loginGui.isAuthenticated()){
             logIn();
             return;
@@ -81,6 +84,7 @@ public class loginSystem {
     public void logOut(){
         loggedIn = false;
         System.out.println("You are now logged out!\n");
+        loginGui.setVisible(true);
     }
     
     public void logIn(){
@@ -107,6 +111,8 @@ public class loginSystem {
         }
     }
     
+    LoginGuiController loginGui;
+    private final IOControl ioControl;
     private final UserDatabase userDatabase;
     private  final Scanner scanner;
     private int menuControlInt; 

@@ -19,9 +19,11 @@ public class mainController {
      * Constructor will get the User logged in and then instantiate the booklist manager
      */
     public mainController() {
-        login = new loginSystem(); 
+        login = new LoginSystem(); 
         UserListManager = UserDatabase.getInstance();
         MediaListManager = MediaDatabase.getInstance();
+        mainGuiController = mainGuiController.getInstance();
+
     }
     
 /**
@@ -31,11 +33,12 @@ public class mainController {
     public void run(){
         // this is the loop that will keep the User Logged in or at the login screen.
         login.loginMenu();
+        mainGuiController.setVisible(true);
         while (login.isLoggedIn()){
            user = login.getUser();
         // this loop will keep the User coming back to the main menu until they Log Out.
         while (userMenuMain()){
-            
+           
         }
         }
         
@@ -254,11 +257,11 @@ public class mainController {
         }
     }
     
-    
+    private MainGuiController mainGuiController;
     private ArrayList<Media> recommendationList;
     private ArrayList<String> userPreferenceList;
     private final MediaDatabase MediaListManager;
-    private final loginSystem login;
+    private final LoginSystem login;
     private final Scanner scanner = new Scanner(System.in);
     private int menuControlInt;
     private User user;    
