@@ -22,7 +22,13 @@ public class Media implements Serializable {
     protected String publisher;
     protected String genre;
     protected int publishYear;
-
+    
+     /**
+     *
+     */
+    public enum Type{
+        Book, Movie, VideoGame, Music
+    }
     
      public Media(){
         this.relatedMedia = new ArrayList<>();
@@ -45,9 +51,8 @@ public class Media implements Serializable {
         System.out.println(review);
         }
     }
-    protected enum Type{
-        Book, Movie, VideoGame, Music
-    }
+
+
     protected Type type;
     
     /**

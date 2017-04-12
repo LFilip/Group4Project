@@ -160,8 +160,8 @@ public class mainController {
         ArrayList<Media> similarList;
         similarList = new ArrayList<>() ;
         for (int i = 1; i < MediaListManager.getMediaList().size();i++){
-            if (MediaListManager.getBookAtIndex(i).getGenre().equals(genre)){
-                similarList.add(MediaListManager.getBookAtIndex(i));
+            if (MediaListManager.getMediaAtIndex(i).getGenre().equals(genre)){
+                similarList.add(MediaListManager.getMediaAtIndex(i));
             }
         }
         
@@ -186,7 +186,7 @@ public class mainController {
         if (MediaListManager.getMediaList().size() > 0){
         MediaListManager.printList();
         int bookIndex = getIntInput(MediaListManager.getMediaList().size());
-        Media bookAtIndex = MediaListManager.getBookAtIndex(bookIndex); // accounts for the 1 off in the actual function
+        Media bookAtIndex = MediaListManager.getMediaAtIndex(bookIndex); // accounts for the 1 off in the actual function
         bookAtIndex.printDetails();
         System.out.println(USER_PUBLIC_LIST_TEXT_TWO);
         menuControlInt = getIntInput(8);

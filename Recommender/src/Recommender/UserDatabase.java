@@ -101,4 +101,8 @@ public class UserDatabase  {
     private static UserDatabase userDatabase;
     private User user;
     private ArrayList<User> userList;
+
+    void addMedia(Media selectedMedia) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -116,6 +116,19 @@ public class MediaDatabase {
         return null;
     } 
     
+    
+    /*
+    * This method allows addition of a media to the public list
+    */
+    public void addMedia(Media media){
+        if (media != null){
+            if (!publicMediaList.contains(media)){
+                publicMediaList.add(media);
+            }
+            else System.out.println("Nope Already there");
+        }
+    }
+    
     /**
      *
      * @param searchTags
@@ -150,6 +163,15 @@ public class MediaDatabase {
                }
             }
     }
+    
+    public boolean addTag(Media media, String newTag){
+        if (!media.getTags().contains(newTag)){
+            media.addTag(newTag);
+            return true;
+        } else {
+            return false;
+        }
+    }
  
     /**
      *
@@ -160,11 +182,11 @@ public class MediaDatabase {
          return true;
     }
 
-    private Media searchByTitle(String searchTitle) {
-                for (Media book : publicMediaList){
-            if (book.getTitle().equals( searchTitle)){
-                System.out.println("Book found with title: " + book.getTitle());
-                return book;
+    public Media searchByTitle(String searchTitle) {
+                for (Media media : publicMediaList){
+            if (media.getTitle().equals( searchTitle)){
+                System.out.println("Book found with title: " + media.getTitle());
+                return media;
                 
             }
         }
@@ -179,7 +201,7 @@ public class MediaDatabase {
         }
     }
 
-    Media getBookAtIndex(int bookIndex) {
-               return publicMediaList.get(bookIndex - 1);
+    Media getMediaAtIndex(int mediaIndex) {
+               return publicMediaList.get(mediaIndex);
     }
 }

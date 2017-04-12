@@ -7,6 +7,7 @@ package Recommender;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -22,7 +23,8 @@ public class MainGuiController extends javax.swing.JFrame {
         UserListManager = UserDatabase.getInstance();
         MediaListManager = MediaDatabase.getInstance();
     }
-
+    private DefaultListModel dlmLeft = new DefaultListModel();
+    private DefaultListModel dlmRight = new DefaultListModel();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,30 +39,23 @@ public class MainGuiController extends javax.swing.JFrame {
         BooksTB = new javax.swing.JToggleButton();
         MusicTB = new javax.swing.JToggleButton();
         MovieTB = new javax.swing.JToggleButton();
-        jSplitPane2 = new javax.swing.JSplitPane();
-        leftInfoPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
         VideoGameTB = new javax.swing.JToggleButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        MainDescriptionText = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        MainListView = new javax.swing.JPanel();
-        BooksTB1 = new javax.swing.JToggleButton();
-        MusicTB1 = new javax.swing.JToggleButton();
-        MovieTB1 = new javax.swing.JToggleButton();
-        VideoGameTB1 = new javax.swing.JToggleButton();
-        jSplitPane3 = new javax.swing.JSplitPane();
-        leftInfoPanel1 = new javax.swing.JPanel();
-        rightInfoPanelMLW = new javax.swing.JScrollPane();
-        WishListView = new javax.swing.JPanel();
-        BooksTB2 = new javax.swing.JToggleButton();
-        MusicTB2 = new javax.swing.JToggleButton();
-        MovieTB2 = new javax.swing.JToggleButton();
-        jSplitPane4 = new javax.swing.JSplitPane();
-        leftInfoPanel2 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        VideoGameTB2 = new javax.swing.JToggleButton();
-        AccountView = new javax.swing.JPanel();
+        addToMainBTN = new javax.swing.JButton();
+        addToWishListBTN = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        createNewBTN = new javax.swing.JButton();
+        MainSplitPane = new javax.swing.JSplitPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        MainRightList = new javax.swing.JList<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        LeftMainList = new javax.swing.JList<>();
+        searchField = new javax.swing.JTextField();
+        searchBTN = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         myListMenu = new javax.swing.JMenuItem();
@@ -71,6 +66,8 @@ public class MainGuiController extends javax.swing.JFrame {
         logoutMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Recommender Main Screen");
+        setResizable(false);
 
         PublicListView.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -79,30 +76,76 @@ public class MainGuiController extends javax.swing.JFrame {
         MusicTB.setText("Music");
 
         MovieTB.setText("Movies");
-
-        javax.swing.GroupLayout leftInfoPanelLayout = new javax.swing.GroupLayout(leftInfoPanel);
-        leftInfoPanel.setLayout(leftInfoPanelLayout);
-        leftInfoPanelLayout.setHorizontalGroup(
-            leftInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 204, Short.MAX_VALUE)
-        );
-        leftInfoPanelLayout.setVerticalGroup(
-            leftInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
-        );
-
-        jSplitPane2.setLeftComponent(leftInfoPanel);
-        jSplitPane2.setRightComponent(jScrollPane2);
+        MovieTB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MovieTBActionPerformed(evt);
+            }
+        });
 
         VideoGameTB.setText("Video Games");
+        VideoGameTB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VideoGameTBActionPerformed(evt);
+            }
+        });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        MainDescriptionText.setEditable(false);
+        MainDescriptionText.setColumns(20);
+        MainDescriptionText.setLineWrap(true);
+        MainDescriptionText.setRows(5);
+        MainDescriptionText.setToolTipText("");
+        MainDescriptionText.setWrapStyleWord(true);
+        MainDescriptionText.setOpaque(false);
+        jScrollPane3.setViewportView(MainDescriptionText);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 10)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Click to Toggle:");
+
+        addToMainBTN.setText("Add to Main list");
+        addToMainBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addToMainBTNActionPerformed(evt);
+            }
+        });
+
+        addToWishListBTN.setText("Add to Wish list");
+
+        jLabel2.setText("Recommendations");
+
+        jLabel3.setText("Public List");
+
+        jLabel4.setText("Details:");
+
+        createNewBTN.setText("Create new Media");
+        createNewBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createNewBTNActionPerformed(evt);
+            }
+        });
+
+        MainSplitPane.setDividerLocation(150);
+
+        jScrollPane2.setViewportView(MainRightList);
+
+        MainSplitPane.setRightComponent(jScrollPane2);
+
+        LeftMainList.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        LeftMainList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                LeftMainListValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(LeftMainList);
+
+        MainSplitPane.setLeftComponent(jScrollPane1);
+
+        searchBTN.setText("Search");
+        searchBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBTNActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PublicListViewLayout = new javax.swing.GroupLayout(PublicListView);
         PublicListView.setLayout(PublicListViewLayout);
@@ -110,16 +153,37 @@ public class MainGuiController extends javax.swing.JFrame {
             PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PublicListViewLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(MusicTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(MovieTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(VideoGameTB, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(BooksTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PublicListViewLayout.createSequentialGroup()
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(129, 129, 129)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 430, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104))
+                    .addGroup(PublicListViewLayout.createSequentialGroup()
+                        .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(createNewBTN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addToWishListBTN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addToMainBTN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 792, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PublicListViewLayout.createSequentialGroup()
+                        .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(MusicTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MovieTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(VideoGameTB, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                            .addComponent(BooksTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(searchBTN))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(MainSplitPane)
+                            .addGroup(PublicListViewLayout.createSequentialGroup()
+                                .addGap(61, 61, 61)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
 
         PublicListViewLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {BooksTB, MovieTB, MusicTB, VideoGameTB, jLabel1});
@@ -127,9 +191,13 @@ public class MainGuiController extends javax.swing.JFrame {
         PublicListViewLayout.setVerticalGroup(
             PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PublicListViewLayout.createSequentialGroup()
-                .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap()
+                .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PublicListViewLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchBTN)
+                        .addGap(51, 51, 51)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(VideoGameTB)
@@ -140,137 +208,26 @@ public class MainGuiController extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BooksTB))
                     .addGroup(PublicListViewLayout.createSequentialGroup()
-                        .addComponent(jSplitPane2)
+                        .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3))
+                        .addGap(24, 24, 24)
+                        .addComponent(MainSplitPane, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-
-        MainListView.setBackground(new java.awt.Color(204, 204, 255));
-
-        BooksTB1.setText("Books");
-
-        MusicTB1.setText("Music");
-
-        MovieTB1.setText("Movies");
-
-        VideoGameTB1.setText("Video Games");
-
-        javax.swing.GroupLayout leftInfoPanel1Layout = new javax.swing.GroupLayout(leftInfoPanel1);
-        leftInfoPanel1.setLayout(leftInfoPanel1Layout);
-        leftInfoPanel1Layout.setHorizontalGroup(
-            leftInfoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 103, Short.MAX_VALUE)
-        );
-        leftInfoPanel1Layout.setVerticalGroup(
-            leftInfoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 461, Short.MAX_VALUE)
-        );
-
-        jSplitPane3.setLeftComponent(leftInfoPanel1);
-        jSplitPane3.setRightComponent(rightInfoPanelMLW);
-
-        javax.swing.GroupLayout MainListViewLayout = new javax.swing.GroupLayout(MainListView);
-        MainListView.setLayout(MainListViewLayout);
-        MainListViewLayout.setHorizontalGroup(
-            MainListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainListViewLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(MainListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BooksTB1)
-                    .addComponent(MusicTB1)
-                    .addComponent(MovieTB1)
-                    .addComponent(VideoGameTB1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
-        );
-
-        MainListViewLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {BooksTB1, MovieTB1, MusicTB1, VideoGameTB1});
-
-        MainListViewLayout.setVerticalGroup(
-            MainListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainListViewLayout.createSequentialGroup()
-                .addComponent(jSplitPane3)
-                .addGap(79, 79, 79))
-            .addGroup(MainListViewLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(VideoGameTB1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(MovieTB1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(MusicTB1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BooksTB1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        WishListView.setBackground(new java.awt.Color(204, 204, 255));
-
-        BooksTB2.setText("Books");
-
-        MusicTB2.setText("Music");
-
-        MovieTB2.setText("Movies");
-
-        javax.swing.GroupLayout leftInfoPanel2Layout = new javax.swing.GroupLayout(leftInfoPanel2);
-        leftInfoPanel2.setLayout(leftInfoPanel2Layout);
-        leftInfoPanel2Layout.setHorizontalGroup(
-            leftInfoPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        leftInfoPanel2Layout.setVerticalGroup(
-            leftInfoPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
-        );
-
-        jSplitPane4.setLeftComponent(leftInfoPanel2);
-        jSplitPane4.setRightComponent(jScrollPane4);
-
-        VideoGameTB2.setText("Video Games");
-
-        javax.swing.GroupLayout WishListViewLayout = new javax.swing.GroupLayout(WishListView);
-        WishListView.setLayout(WishListViewLayout);
-        WishListViewLayout.setHorizontalGroup(
-            WishListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(WishListViewLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(WishListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BooksTB2)
-                    .addComponent(MusicTB2)
-                    .addComponent(MovieTB2)
-                    .addComponent(VideoGameTB2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
-        );
-
-        WishListViewLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {BooksTB2, MovieTB2, MusicTB2, VideoGameTB2});
-
-        WishListViewLayout.setVerticalGroup(
-            WishListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, WishListViewLayout.createSequentialGroup()
-                .addComponent(jSplitPane4)
-                .addGap(79, 79, 79))
-            .addGroup(WishListViewLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(VideoGameTB2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(MovieTB2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(MusicTB2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BooksTB2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout AccountViewLayout = new javax.swing.GroupLayout(AccountView);
-        AccountView.setLayout(AccountViewLayout);
-        AccountViewLayout.setHorizontalGroup(
-            AccountViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 752, Short.MAX_VALUE)
-        );
-        AccountViewLayout.setVerticalGroup(
-            AccountViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 531, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)))
+                .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PublicListViewLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(addToMainBTN)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(addToWishListBTN)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(createNewBTN)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PublicListViewLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout MainViewLayout = new javax.swing.GroupLayout(MainView);
@@ -278,30 +235,10 @@ public class MainGuiController extends javax.swing.JFrame {
         MainViewLayout.setHorizontalGroup(
             MainViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(PublicListView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(MainViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainViewLayout.createSequentialGroup()
-                    .addComponent(AccountView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(MainViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainViewLayout.createSequentialGroup()
-                    .addComponent(MainListView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(MainViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(WishListView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         MainViewLayout.setVerticalGroup(
             MainViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(PublicListView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(MainViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainViewLayout.createSequentialGroup()
-                    .addComponent(AccountView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(MainViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(MainListView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(MainViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainViewLayout.createSequentialGroup()
-                    .addComponent(WishListView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
 
         menuBar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -315,6 +252,11 @@ public class MainGuiController extends javax.swing.JFrame {
         });
 
         myListMenu.setText("My List");
+        myListMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                myListMenuActionPerformed(evt);
+            }
+        });
         fileMenu.add(myListMenu);
 
         publicListMenu.setText("Public List");
@@ -326,6 +268,11 @@ public class MainGuiController extends javax.swing.JFrame {
         fileMenu.add(publicListMenu);
 
         wishListMenu.setText("Wish List");
+        wishListMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wishListMenuActionPerformed(evt);
+            }
+        });
         fileMenu.add(wishListMenu);
 
         menuBar.add(fileMenu);
@@ -361,13 +308,13 @@ public class MainGuiController extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 762, Short.MAX_VALUE)
+            .addGap(0, 961, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(MainView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 542, Short.MAX_VALUE)
+            .addGap(0, 663, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(MainView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -383,7 +330,10 @@ public class MainGuiController extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutMenuActionPerformed
 
     private void editAccountMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editAccountMenuActionPerformed
-        // TODO add your handling code here:
+        this.getContentPane().removeAll();
+        this.getContentPane().add(PublicListView);
+        this.pack();
+        this.repaint();
     }//GEN-LAST:event_editAccountMenuActionPerformed
 
     private void accountMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountMenuActionPerformed
@@ -395,18 +345,109 @@ public class MainGuiController extends javax.swing.JFrame {
     }//GEN-LAST:event_fileMenuActionPerformed
 
     private void publicListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicListMenuActionPerformed
+        this.getContentPane().removeAll();
         this.getContentPane().add(PublicListView);
         this.pack();
-        
+        this.repaint();
     }//GEN-LAST:event_publicListMenuActionPerformed
 
+    private void MovieTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieTBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MovieTBActionPerformed
+
     
+    /*
+    * Button to change to myList view in the main frame.
+    */
+    private void myListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myListMenuActionPerformed
+
+        this.getContentPane().removeAll();
+        this.getContentPane().add(PublicListView);
+        this.pack();
+        this.repaint();
+    }//GEN-LAST:event_myListMenuActionPerformed
+
+    private void wishListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wishListMenuActionPerformed
+
+        this.getContentPane().removeAll();
+        this.getContentPane().add(PublicListView);
+        this.pack();
+        this.repaint();
+    }//GEN-LAST:event_wishListMenuActionPerformed
+
+    private void VideoGameTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VideoGameTBActionPerformed
+       int i= 1;
+       dlmLeft.removeAllElements();
+       LeftMainList.setModel(dlmLeft);
+        for(Media media: MediaListManager.getMediaList()){
+            dlmLeft.addElement(i + ": " +media.getTitle());
+            i++;
+        }   
+        LeftMainList.setModel(dlmLeft);
+    }//GEN-LAST:event_VideoGameTBActionPerformed
+
+    private void createNewBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewBTNActionPerformed
+        MainDescriptionText.setText("Use the popup window to create a new media");
+        MediaFactoryGui mediaFactoryGui = new MediaFactoryGui();
+        mediaFactoryGui.setVisible(true);
+        newMedia = mediaFactoryGui.createNewMedia();
+    }//GEN-LAST:event_createNewBTNActionPerformed
+
+    private void LeftMainListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_LeftMainListValueChanged
+       int i = LeftMainList.getSelectedIndex();
+       selectedMedia = MediaListManager.getMediaAtIndex(i);
+       createDescription(selectedMedia);
+        MainDescriptionText.setText(mediaDescription);
+    }//GEN-LAST:event_LeftMainListValueChanged
+
+    private void addToMainBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToMainBTNActionPerformed
+        UserListManager.addMedia(selectedMedia);
+    }//GEN-LAST:event_addToMainBTNActionPerformed
+
+    private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
+        int i = 0;
+        for (Media media : MediaListManager.getMediaList()){
+            searchTitle = searchField.getText();
+            if(searchTitle.equals( media.getTitle())){
+                LeftMainList.setSelectedIndex(i);
+            }
+            i++;
+        }
+       
+    }//GEN-LAST:event_searchBTNActionPerformed
+
+    /**
+     * This opens the main frame to the main view.  used by other functions to make this frame active
+     */
+    public void openMyList() {
+        this.setVisible(true);
+        MainView.removeAll();
+        MainView.add(PublicListView);
+        MainView.repaint();
+        MainView.revalidate();
+    }
+    
+    /**
+     *
+     * @return
+     */
     public static MainGuiController getInstance(){
         if (mainGuiController == null){
             mainGuiController = new MainGuiController();
         }
         return mainGuiController;
     }
+    
+    private void createDescription(Media media){
+        
+        mediaDescription = "Title: " + media.getTitle() + "\n" + 
+                           "Author: " + media.getAuthor() + "\n" +
+                           "Published in: " + media.getYearPublished() + "\n" +
+                           "Published by: " + media.getPublisher() + "\n" +
+                           "Genre: " + media.getGenre() + "\n" +
+                           "Stars out of 5" + 4 + "\n";
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -449,7 +490,10 @@ public class MainGuiController extends javax.swing.JFrame {
         });
     }
     
-    
+    String searchTitle;
+    String mediaDescription;
+    private Media newMedia;
+    private Media selectedMedia;
     private LoginGuiController loginGuiController;
     private static MainGuiController mainGuiController;
     ArrayList<Media> publicMediaList;
@@ -462,50 +506,37 @@ public class MainGuiController extends javax.swing.JFrame {
     private int menuControlInt;
     private User user;    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel AccountView;
     private javax.swing.JToggleButton BooksTB;
-    private javax.swing.JToggleButton BooksTB1;
-    private javax.swing.JToggleButton BooksTB2;
-    private javax.swing.JPanel MainListView;
+    private javax.swing.JList<String> LeftMainList;
+    private javax.swing.JTextArea MainDescriptionText;
+    private javax.swing.JList<String> MainRightList;
+    private javax.swing.JSplitPane MainSplitPane;
     private javax.swing.JPanel MainView;
     private javax.swing.JToggleButton MovieTB;
-    private javax.swing.JToggleButton MovieTB1;
-    private javax.swing.JToggleButton MovieTB2;
     private javax.swing.JToggleButton MusicTB;
-    private javax.swing.JToggleButton MusicTB1;
-    private javax.swing.JToggleButton MusicTB2;
     private javax.swing.JPanel PublicListView;
     private javax.swing.JToggleButton VideoGameTB;
-    private javax.swing.JToggleButton VideoGameTB1;
-    private javax.swing.JToggleButton VideoGameTB2;
-    private javax.swing.JPanel WishListView;
     private javax.swing.JMenu accountMenu;
+    private javax.swing.JButton addToMainBTN;
+    private javax.swing.JButton addToWishListBTN;
+    private javax.swing.JButton createNewBTN;
     private javax.swing.JMenuItem editAccountMenu;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JSplitPane jSplitPane3;
-    private javax.swing.JSplitPane jSplitPane4;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JPanel leftInfoPanel;
-    private javax.swing.JPanel leftInfoPanel1;
-    private javax.swing.JPanel leftInfoPanel2;
     private javax.swing.JMenuItem logoutMenu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem myListMenu;
     private javax.swing.JMenuItem publicListMenu;
-    private javax.swing.JScrollPane rightInfoPanelMLW;
+    private javax.swing.JButton searchBTN;
+    private javax.swing.JTextField searchField;
     private javax.swing.JMenuItem wishListMenu;
     // End of variables declaration//GEN-END:variables
 
-    void openMyList() {
-        MainView.removeAll();
-        MainView.add(MainListView);
-        MainView.repaint();
-        MainView.revalidate();
-    }
+
 }
