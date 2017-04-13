@@ -18,6 +18,15 @@ public class UserDatabase  {
 
     private final IOControl ioControl;
     
+    
+    public void setLoggedInUser(User newUser){
+        user = newUser;
+    }
+    
+    public User getLoggedInUser(){
+        return user;
+    }
+    
     private UserDatabase(){
         this.scanner = new Scanner(System.in);
         ioControl = IOControl.getInstance();
@@ -27,6 +36,19 @@ public class UserDatabase  {
        } else{
            userList = new ArrayList<>();
        }
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public boolean isEmpty(){
+        if(userList.size() < 1){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     
     /**
@@ -103,6 +125,6 @@ public class UserDatabase  {
     private ArrayList<User> userList;
 
     void addMedia(Media selectedMedia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        user.addMedia(selectedMedia);
     }
 }

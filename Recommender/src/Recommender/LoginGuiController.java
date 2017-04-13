@@ -21,7 +21,17 @@ public class LoginGuiController extends javax.swing.JFrame {
         userDatabase = UserDatabase.getInstance();
         MainGuiController = MainGuiController.getInstance();
     }
+
+    LoginGuiController(String user_Created) {
+        initComponents();
+        userDatabase = UserDatabase.getInstance();
+        MainGuiController = MainGuiController.getInstance();
+        responseLabel.setText(user_Created);
+    }
     
+    boolean isAuthenticated() {
+        return authenticated;
+    }
 
 
     /**
@@ -138,6 +148,7 @@ public class LoginGuiController extends javax.swing.JFrame {
     private void loginBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBTNActionPerformed
         // TODO add your handling code here:
         responseLabel.setText("You Clicked it!");
+        if(!userDatabase.isEmpty()){
         user = userDatabase.find(jTextField1.getText());
         
         
@@ -146,6 +157,7 @@ public class LoginGuiController extends javax.swing.JFrame {
                 String passText = new String(jPasswordField1.getPassword());
                 if(user.getPassword().equals(passText)){
                    authenticated = true;
+                   userDatabase.setLoggedInUser(user);
                    responseLabel.setText("Logged in");
                    MainGuiController.setVisible(true);
                    MainGuiController.openMyList();
@@ -153,12 +165,15 @@ public class LoginGuiController extends javax.swing.JFrame {
                    return;  // If the User remembers their password.
                 }
                 else {
-                    responseLabel.setText("This is wrong please try again");
+                    responseLabel.setText("Incorrect");
                 }
             }
         }
         else {
-            responseLabel.setText("The Username or Password is incorrect");
+            responseLabel.setText("Incorrect Login");
+        }
+        } else {
+            responseLabel.setText("No Users Created");
         }
     }//GEN-LAST:event_loginBTNActionPerformed
 
@@ -169,6 +184,8 @@ public class LoginGuiController extends javax.swing.JFrame {
        userFactoryGui.setVisible(true);
        this.setVisible(false);
     }//GEN-LAST:event_createAccountBTNActionPerformed
+
+    
 
     /**
      * @param args the command line arguments
@@ -233,7 +250,4 @@ public class LoginGuiController extends javax.swing.JFrame {
     private javax.swing.JLabel responseLabel;
     // End of variables declaration//GEN-END:variables
 
-    boolean isAuthenticated() {
-        return authenticated;
-    }
 }

@@ -61,7 +61,9 @@ public class MediaFactoryGui extends javax.swing.JFrame {
         GenreField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setBackground(new java.awt.Color(204, 204, 255));
 
         backBTN.setText("Back");
         backBTN.addActionListener(new java.awt.event.ActionListener() {

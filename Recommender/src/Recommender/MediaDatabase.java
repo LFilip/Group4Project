@@ -5,7 +5,7 @@
  */
 package Recommender;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Scanner;
 import java.util.Collections;
 import java.io.*;
@@ -201,6 +201,12 @@ public class MediaDatabase {
         }
     }
 
+    public ArrayList<Media> sortByTitle(ArrayList<Media> toBeSorted){
+        ArrayList<Media> sortedList;
+        sortedList = toBeSorted;
+        return sortedList;
+    }
+    
     Media getMediaAtIndex(int mediaIndex) {
                return publicMediaList.get(mediaIndex);
     }

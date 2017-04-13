@@ -28,7 +28,7 @@ public class User implements Serializable {
      * @param newIDnumber
      */
     public User(String newName, String newPassword, int newIDnumber) {
-        myBookList = new ArrayList<>();
+        userMediaList = new ArrayList<>();
         myWishList = new ArrayList<>();
         myPreferenceList = new ArrayList<>();
         name = newName;
@@ -62,7 +62,7 @@ public class User implements Serializable {
             return;
         }
         
-        myBookList.add(media);
+        userMediaList.add(media);
         System.out.println("The book " + media.getTitle() + " has been added to your list.");
     }
     
@@ -73,7 +73,7 @@ public class User implements Serializable {
     public ArrayList<String> generateTopTags(){
         final Map<String, Integer> counter = new HashMap<String, Integer>();
         
-        for (Media media: myBookList){
+        for (Media media: userMediaList){
             for (String str : media.getTags())
                 counter.put(str, 1 + (counter.containsKey(str) ? counter.get(str) : 0));
 
@@ -97,7 +97,7 @@ public class User implements Serializable {
      */
     public boolean removeBook(int index ){
         
-        myBookList.remove(index - 1);
+        userMediaList.remove(index - 1);
         return true;
     }
     
@@ -114,8 +114,8 @@ public class User implements Serializable {
      *
      */
     public void printList(){
-        for (int i = 0; i < myBookList.size();i++){
-            System.out.println("Media: " +(i + 1) + " " + myBookList.get(i));
+        for (int i = 0; i < userMediaList.size();i++){
+            System.out.println("Media: " +(i + 1) + " " + userMediaList.get(i));
         }
     }
     
@@ -124,7 +124,7 @@ public class User implements Serializable {
      */
     public void printWishList(){
             for (int i = 0; i < myWishList.size();i++){
-            System.out.println("Media: " +(i + 1) + " " + myBookList.get(i));
+            System.out.println("Media: " +(i + 1) + " " + userMediaList.get(i));
         }
     }
     
@@ -133,7 +133,7 @@ public class User implements Serializable {
      * @return
      */
     public int getBookListSize(){
-        return myBookList.size();
+        return userMediaList.size();
     }
     
     /**
@@ -145,7 +145,20 @@ public class User implements Serializable {
     }
     
     public ArrayList<Media> getUserMediaList(){
-        return myBookList;
+        return userMediaList;
+    }
+    
+    public void updateList(ArrayList<Media> publicList){
+        ArrayList<Media> temp = new ArrayList<Media>();
+        
+        for (Media media : publicList){
+            for (Media userMedia: userMediaList){
+                if (userMedia.getTitle() == media.getTitle()){
+                    temp.add(media);
+                }
+            }
+        }
+        userMediaList = temp;
     }
     
     /**
@@ -154,7 +167,7 @@ public class User implements Serializable {
      * @return
      */
     public Media searchListByTitle(String searchTitle){
-        for (Media book : myBookList){
+        for (Media book : userMediaList){
             if (book.getTitle().equals( searchTitle)){
                 System.out.println("Media found with title: " + book.getTitle());
                 return book;
@@ -167,12 +180,12 @@ public class User implements Serializable {
     
     public Media searchListByIndex(int index ){
         index --;
-        return myBookList.get(index);
+        return userMediaList.get(index);
     }
     
     private int idNumber;
     private ArrayList<Media> myWishList;
-    private ArrayList<Media> myBookList;
+    private ArrayList<Media> userMediaList;
     private ArrayList<String> myPreferenceList;
     private String name;
     private String password;

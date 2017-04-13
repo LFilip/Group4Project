@@ -22,6 +22,7 @@ public class MainGuiController extends javax.swing.JFrame {
         initComponents();
         UserListManager = UserDatabase.getInstance();
         MediaListManager = MediaDatabase.getInstance();
+        PublisherLoggedIn = false;
     }
     private DefaultListModel dlmLeft = new DefaultListModel();
     private DefaultListModel dlmRight = new DefaultListModel();
@@ -44,20 +45,23 @@ public class MainGuiController extends javax.swing.JFrame {
         MainDescriptionText = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         addToMainBTN = new javax.swing.JButton();
-        addToWishListBTN = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         createNewBTN = new javax.swing.JButton();
         MainSplitPane = new javax.swing.JSplitPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        MainRightList = new javax.swing.JList<>();
+        RightMainList = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         LeftMainList = new javax.swing.JList<>();
         searchField = new javax.swing.JTextField();
         searchBTN = new javax.swing.JButton();
+        AddReviewBTN = new javax.swing.JButton();
+        AddTagsBTN = new javax.swing.JButton();
+        DisplayText = new javax.swing.JLabel();
+        viewPublicListBTN = new javax.swing.JButton();
+        viewRecommendationsBTN = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
+        listMenu = new javax.swing.JMenu();
         myListMenu = new javax.swing.JMenuItem();
         publicListMenu = new javax.swing.JMenuItem();
         wishListMenu = new javax.swing.JMenuItem();
@@ -68,6 +72,11 @@ public class MainGuiController extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Recommender Main Screen");
         setResizable(false);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                formMouseEntered(evt);
+            }
+        });
 
         PublicListView.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -109,11 +118,7 @@ public class MainGuiController extends javax.swing.JFrame {
             }
         });
 
-        addToWishListBTN.setText("Add to Wish list");
-
-        jLabel2.setText("Recommendations");
-
-        jLabel3.setText("Public List");
+        jLabel3.setText("Your List");
 
         jLabel4.setText("Details:");
 
@@ -126,7 +131,12 @@ public class MainGuiController extends javax.swing.JFrame {
 
         MainSplitPane.setDividerLocation(150);
 
-        jScrollPane2.setViewportView(MainRightList);
+        RightMainList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                RightMainListValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(RightMainList);
 
         MainSplitPane.setRightComponent(jScrollPane2);
 
@@ -147,6 +157,34 @@ public class MainGuiController extends javax.swing.JFrame {
             }
         });
 
+        AddReviewBTN.setText("Add Review");
+        AddReviewBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddReviewBTNActionPerformed(evt);
+            }
+        });
+
+        AddTagsBTN.setText("Add Tags");
+        AddTagsBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddTagsBTNActionPerformed(evt);
+            }
+        });
+
+        viewPublicListBTN.setText("View Public List");
+        viewPublicListBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewPublicListBTNActionPerformed(evt);
+            }
+        });
+
+        viewRecommendationsBTN.setText("View Recommendations");
+        viewRecommendationsBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewRecommendationsBTNActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PublicListViewLayout = new javax.swing.GroupLayout(PublicListView);
         PublicListView.setLayout(PublicListViewLayout);
         PublicListViewLayout.setHorizontalGroup(
@@ -154,35 +192,42 @@ public class MainGuiController extends javax.swing.JFrame {
             .addGroup(PublicListViewLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PublicListViewLayout.createSequentialGroup()
-                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(129, 129, 129)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 430, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(104, 104, 104))
                     .addGroup(PublicListViewLayout.createSequentialGroup()
                         .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(createNewBTN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addToWishListBTN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addToMainBTN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(createNewBTN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                            .addComponent(addToMainBTN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(AddReviewBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(AddTagsBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(10, 10, 10)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 792, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PublicListViewLayout.createSequentialGroup()
                         .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(MusicTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MovieTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(VideoGameTB, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                            .addComponent(BooksTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(searchBTN))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(MainSplitPane)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PublicListViewLayout.createSequentialGroup()
+                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(73, 73, 73)
+                                .addComponent(jLabel3)
+                                .addGap(202, 202, 202)
+                                .addComponent(viewPublicListBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(89, 89, 89)
+                                .addComponent(viewRecommendationsBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(PublicListViewLayout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(MusicTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(MovieTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(VideoGameTB, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                                    .addComponent(BooksTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(searchBTN))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(MainSplitPane)
+                                    .addGroup(PublicListViewLayout.createSequentialGroup()
+                                        .addGap(61, 61, 61)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(DisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addContainerGap())))
         );
 
@@ -208,26 +253,29 @@ public class MainGuiController extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BooksTB))
                     .addGroup(PublicListViewLayout.createSequentialGroup()
-                        .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(viewPublicListBTN)
+                                .addComponent(viewRecommendationsBTN))
                             .addComponent(jLabel3))
-                        .addGap(24, 24, 24)
+                        .addGap(19, 19, 19)
                         .addComponent(MainSplitPane, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)))
+                        .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DisplayText))))
+                .addGap(2, 2, 2)
                 .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PublicListViewLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addComponent(AddTagsBTN)
+                        .addGap(12, 12, 12)
                         .addComponent(addToMainBTN)
+                        .addGap(11, 11, 11)
+                        .addComponent(AddReviewBTN)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(addToWishListBTN)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(createNewBTN)
-                        .addGap(21, 21, 21))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PublicListViewLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(createNewBTN))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout MainViewLayout = new javax.swing.GroupLayout(MainView);
@@ -244,38 +292,38 @@ public class MainGuiController extends javax.swing.JFrame {
         menuBar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menuBar.setForeground(new java.awt.Color(255, 255, 255));
 
-        fileMenu.setText("File");
-        fileMenu.addActionListener(new java.awt.event.ActionListener() {
+        listMenu.setText("Lists");
+        listMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fileMenuActionPerformed(evt);
+                listMenuActionPerformed(evt);
             }
         });
 
-        myListMenu.setText("My List");
+        myListMenu.setText("View My List");
         myListMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 myListMenuActionPerformed(evt);
             }
         });
-        fileMenu.add(myListMenu);
+        listMenu.add(myListMenu);
 
-        publicListMenu.setText("Public List");
+        publicListMenu.setText("View Public List");
         publicListMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 publicListMenuActionPerformed(evt);
             }
         });
-        fileMenu.add(publicListMenu);
+        listMenu.add(publicListMenu);
 
-        wishListMenu.setText("Wish List");
+        wishListMenu.setText("View Recommendations");
         wishListMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 wishListMenuActionPerformed(evt);
             }
         });
-        fileMenu.add(wishListMenu);
+        listMenu.add(wishListMenu);
 
-        menuBar.add(fileMenu);
+        menuBar.add(listMenu);
 
         accountMenu.setText("Account");
         accountMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -340,9 +388,9 @@ public class MainGuiController extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_accountMenuActionPerformed
 
-    private void fileMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileMenuActionPerformed
+    private void listMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listMenuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fileMenuActionPerformed
+    }//GEN-LAST:event_listMenuActionPerformed
 
     private void publicListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicListMenuActionPerformed
         this.getContentPane().removeAll();
@@ -376,14 +424,7 @@ public class MainGuiController extends javax.swing.JFrame {
     }//GEN-LAST:event_wishListMenuActionPerformed
 
     private void VideoGameTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VideoGameTBActionPerformed
-       int i= 1;
-       dlmLeft.removeAllElements();
-       LeftMainList.setModel(dlmLeft);
-        for(Media media: MediaListManager.getMediaList()){
-            dlmLeft.addElement(i + ": " +media.getTitle());
-            i++;
-        }   
-        LeftMainList.setModel(dlmLeft);
+
     }//GEN-LAST:event_VideoGameTBActionPerformed
 
     private void createNewBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewBTNActionPerformed
@@ -394,27 +435,93 @@ public class MainGuiController extends javax.swing.JFrame {
     }//GEN-LAST:event_createNewBTNActionPerformed
 
     private void LeftMainListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_LeftMainListValueChanged
+       
        int i = LeftMainList.getSelectedIndex();
-       selectedMedia = MediaListManager.getMediaAtIndex(i);
+       selectedMedia = user.getUserMediaList().get(i);
        createDescription(selectedMedia);
-        MainDescriptionText.setText(mediaDescription);
+       MainDescriptionText.setText(mediaDescription);
     }//GEN-LAST:event_LeftMainListValueChanged
 
     private void addToMainBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToMainBTNActionPerformed
+        
         UserListManager.addMedia(selectedMedia);
+        user = UserListManager.getLoggedInUser();
+        
+        if (user.getUserMediaList().contains(selectedMedia)){
+            DisplayText.setText("Well this is already in your list.");
+        } else{
+        user.addMedia(selectedMedia);
+            DisplayText.setText(selectedMedia.getTitle()+ " Added to your list");
+        }
+        UserListManager.saveUsers();
     }//GEN-LAST:event_addToMainBTNActionPerformed
 
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
         int i = 0;
+        
+        // searches the public list and displays on right.
         for (Media media : MediaListManager.getMediaList()){
-            searchTitle = searchField.getText();
-            if(searchTitle.equals( media.getTitle())){
-                LeftMainList.setSelectedIndex(i);
+            searchTitle = searchField.getText().toLowerCase();
+            if(searchTitle.equals( media.getTitle().toLowerCase())){
+                RightMainList.setSelectedIndex(i);
             }
             i++;
         }
        
     }//GEN-LAST:event_searchBTNActionPerformed
+
+    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
+       if (dlmRight.size() != MediaListManager.getMediaList().size()){
+       int i= 1;
+       dlmRight.removeAllElements();
+       RightMainList.setModel(dlmRight);
+        for(Media media: MediaListManager.getMediaList()){
+            dlmRight.addElement(i + ": " +media.getTitle());
+            i++;
+        }   
+        RightMainList.setModel(dlmRight);
+       }
+       user = UserListManager.getLoggedInUser();
+       if (dlmLeft.size() != user.getBookListSize()){
+           int i = 1;
+           dlmLeft.removeAllElements();
+           LeftMainList.setModel(dlmLeft);
+           for (Media media: user.getUserMediaList()){
+               dlmLeft.addElement(i +": " + media.getTitle());
+               i++;
+           }
+           LeftMainList.setModel(dlmLeft);
+       }
+    }//GEN-LAST:event_formMouseEntered
+
+    private void RightMainListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_RightMainListValueChanged
+       int i = RightMainList.getSelectedIndex();
+       selectedMedia = MediaListManager.getMediaAtIndex(i);
+       createDescription(selectedMedia);
+        MainDescriptionText.setText(mediaDescription);
+    }//GEN-LAST:event_RightMainListValueChanged
+
+    private void AddReviewBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddReviewBTNActionPerformed
+        AddReviewGui addReviewGui = new AddReviewGui(selectedMedia);
+        addReviewGui.setVisible(true);
+        MediaListManager.saveList();
+    }//GEN-LAST:event_AddReviewBTNActionPerformed
+
+    private void viewPublicListBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPublicListBTNActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_viewPublicListBTNActionPerformed
+
+    private void viewRecommendationsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRecommendationsBTNActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_viewRecommendationsBTNActionPerformed
+
+    private void AddTagsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddTagsBTNActionPerformed
+        if (selectedMedia != null){
+        AddTagsGui addTagsGui = new AddTagsGui(selectedMedia);
+        addTagsGui.setVisible(true);
+        MediaListManager.saveList();
+        }
+    }//GEN-LAST:event_AddTagsBTNActionPerformed
 
     /**
      * This opens the main frame to the main view.  used by other functions to make this frame active
@@ -445,7 +552,15 @@ public class MainGuiController extends javax.swing.JFrame {
                            "Published in: " + media.getYearPublished() + "\n" +
                            "Published by: " + media.getPublisher() + "\n" +
                            "Genre: " + media.getGenre() + "\n" +
-                           "Stars out of 5" + 4 + "\n";
+                           "Stars out of 5: " + media.getRating() + "\n" +
+                "============================================================\n"; 
+                           
+       for(String newString: media.getReviews()){
+           mediaDescription += " " + newString + "\n"
+                   + "==================================================================\n";
+       }
+       
+       
     }
     
     /**
@@ -490,6 +605,8 @@ public class MainGuiController extends javax.swing.JFrame {
         });
     }
     
+    
+    Boolean PublisherLoggedIn;
     String searchTitle;
     String mediaDescription;
     private Media newMedia;
@@ -506,37 +623,42 @@ public class MainGuiController extends javax.swing.JFrame {
     private int menuControlInt;
     private User user;    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddReviewBTN;
+    private javax.swing.JButton AddTagsBTN;
     private javax.swing.JToggleButton BooksTB;
+    private javax.swing.JLabel DisplayText;
     private javax.swing.JList<String> LeftMainList;
     private javax.swing.JTextArea MainDescriptionText;
-    private javax.swing.JList<String> MainRightList;
     private javax.swing.JSplitPane MainSplitPane;
     private javax.swing.JPanel MainView;
     private javax.swing.JToggleButton MovieTB;
     private javax.swing.JToggleButton MusicTB;
     private javax.swing.JPanel PublicListView;
+    private javax.swing.JList<String> RightMainList;
     private javax.swing.JToggleButton VideoGameTB;
     private javax.swing.JMenu accountMenu;
     private javax.swing.JButton addToMainBTN;
-    private javax.swing.JButton addToWishListBTN;
     private javax.swing.JButton createNewBTN;
     private javax.swing.JMenuItem editAccountMenu;
-    private javax.swing.JMenu fileMenu;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JMenu listMenu;
     private javax.swing.JMenuItem logoutMenu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem myListMenu;
     private javax.swing.JMenuItem publicListMenu;
     private javax.swing.JButton searchBTN;
     private javax.swing.JTextField searchField;
+    private javax.swing.JButton viewPublicListBTN;
+    private javax.swing.JButton viewRecommendationsBTN;
     private javax.swing.JMenuItem wishListMenu;
     // End of variables declaration//GEN-END:variables
+
+
 
 
 }

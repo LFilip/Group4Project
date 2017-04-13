@@ -156,13 +156,27 @@ public class UserFactoryGui extends javax.swing.JFrame {
     private void submitBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBTNActionPerformed
         String passText2 = new String(UserPassCheck.getPassword());
         String passText = new String(PassField.getPassword());
+        
+        if(userDatabase.isEmpty()){
+            displayPane.setText("This user is Available");
+            if (passText.equals(passText2)){
+                
+                userDatabase.createUser(UserNameField.getText(), passText);
+                loginGuiController = new LoginGuiController("User Created");
+                loginGuiController.setVisible(true);
+                this.setVisible(false);
+            }
+            else {
+                displayPane.setText("The passwords Didnt Match");
+            }
+        } else {
         user = userDatabase.find(UserNameField.getText());
         if (user == null){
             displayPane.setText("This user is Available");
             if (passText.equals(passText2)){
                 
                 userDatabase.createUser(UserNameField.getText(), passText);
-                loginGuiController = new LoginGuiController();
+                loginGuiController = new LoginGuiController("User Created");
                 loginGuiController.setVisible(true);
                 this.setVisible(false);
             }
@@ -173,6 +187,7 @@ public class UserFactoryGui extends javax.swing.JFrame {
         else
         {
             displayPane.setText("This name is already taken. Try another");
+        }
         }
     }//GEN-LAST:event_submitBTNActionPerformed
 

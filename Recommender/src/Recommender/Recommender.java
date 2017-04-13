@@ -16,7 +16,9 @@ public class Recommender {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-      mainController MyMainController = new mainController();
-      MyMainController.run();
+      LoginGuiController loginGuiController = new LoginGuiController();
+      loginGuiController.setVisible(true);
+//      mainController MyMainController = new mainController();
+ //     MyMainController.run();
     }
 }

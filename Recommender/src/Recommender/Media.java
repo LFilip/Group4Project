@@ -22,6 +22,21 @@ public class Media implements Serializable {
     protected String publisher;
     protected String genre;
     protected int publishYear;
+
+    public ArrayList<String> getReviews() {
+        return Reviews;
+    }
+    
+    public int getRating(){
+        int totalRating = 0;
+        int reviewTotal = 0;
+        reviewTotal = starRatings.size();
+        
+        for (int i: starRatings){
+            totalRating += i;
+        }
+        return (totalRating / reviewTotal);
+    }
     
      /**
      *
@@ -44,7 +59,8 @@ public class Media implements Serializable {
             System.out.println(review);
         }
     }
-
+    
+    
     void printReviews() {
         
         for (String review: Reviews){
