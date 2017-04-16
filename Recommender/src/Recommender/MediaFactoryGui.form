@@ -237,7 +237,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="MovieRB" linkSize="4" min="-2" max="-2" attributes="0"/>
+                  <Component id="MovieRB" min="-2" pref="23" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="BookRB" linkSize="4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -254,21 +254,33 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Music"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MusicRBMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="BookRB">
           <Properties>
             <Property name="text" type="java.lang.String" value="Book"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BookRBMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="VideoGameRB">
           <Properties>
             <Property name="text" type="java.lang.String" value="Video Game"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="VideoGameRBMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="MovieRB">
           <Properties>
             <Property name="text" type="java.lang.String" value="Movie"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MovieRBMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

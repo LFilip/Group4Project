@@ -115,7 +115,10 @@ public class UserDatabase  {
             }
 
     }
-    
+        
+    void addMedia(Media selectedMedia) {
+        user.addMedia(selectedMedia);
+    }
     
     private String userName;
     private String password;
@@ -124,7 +127,5 @@ public class UserDatabase  {
     private User user;
     private ArrayList<User> userList;
 
-    void addMedia(Media selectedMedia) {
-        user.addMedia(selectedMedia);
-    }
+
 }

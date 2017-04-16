@@ -66,6 +66,15 @@ public class User implements Serializable {
         System.out.println("The book " + media.getTitle() + " has been added to your list.");
     }
     
+    public void removeMedia(Media media){
+        if (searchListByTitle(media.getTitle()) != null){
+            Media removedMedia = searchListByTitle(media.getTitle());
+            userMediaList.remove(removedMedia);
+            return;
+        }
+        
+    }
+    
     /**
      *
      * @return will return a list of top favorites.
@@ -86,8 +95,17 @@ public class User implements Serializable {
                 }
             });
         }
-        
-        return myPreferenceList;
+        ArrayList<String> top7;
+        top7 = new ArrayList<>();
+        if (myPreferenceList.size() >= 7){
+        for (int i = 0; i < 7; i++){
+            top7.add(myPreferenceList.get(i));
+        }
+        return top7;
+        }
+        else {
+            return myPreferenceList;
+        }
     }
     
     /**
@@ -153,7 +171,7 @@ public class User implements Serializable {
         
         for (Media media : publicList){
             for (Media userMedia: userMediaList){
-                if (userMedia.getTitle() == media.getTitle()){
+                if (userMedia.getTitle().equals( media.getTitle())){
                     temp.add(media);
                 }
             }

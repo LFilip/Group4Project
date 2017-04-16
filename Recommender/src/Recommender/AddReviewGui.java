@@ -22,6 +22,8 @@ public class AddReviewGui extends javax.swing.JFrame {
     public AddReviewGui(Media media){
         initComponents();
         newMedia = media;
+
+        mediaDatabase = MediaDatabase.getInstance();
     }
 
     /**
@@ -39,6 +41,8 @@ public class AddReviewGui extends javax.swing.JFrame {
         DisplayLabel = new javax.swing.JLabel();
         cancelBTN = new javax.swing.JButton();
         submitBTN = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        responseText = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,6 +66,25 @@ public class AddReviewGui extends javax.swing.JFrame {
             }
         });
 
+        responseText.setEditable(false);
+        responseText.setColumns(20);
+        responseText.setRows(5);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 180, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(responseText, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 61, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(responseText, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,6 +93,7 @@ public class AddReviewGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(submitBTN)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -93,19 +117,29 @@ public class AddReviewGui extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(DisplayLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ReviewField, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                .addComponent(ReviewField, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(submitBTN)
-                    .addComponent(cancelBTN))
-                .addGap(56, 56, 56))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(submitBTN)
+                        .addComponent(cancelBTN))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBTNActionPerformed
+        if (Integer.parseInt(RatingField.getText()) > 0 && Integer.parseInt(RatingField.getText()) < 6){
         newMedia.addReview(ReviewField.getText(), Integer.parseInt(RatingField.getText()));
+        mediaDatabase.saveList();
+        }
+        else {
+            responseText.setText("Between 1 and 5 please");
+        }
+        
+        
     }//GEN-LAST:event_submitBTNActionPerformed
 
     private void cancelBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBTNActionPerformed
@@ -147,7 +181,7 @@ public class AddReviewGui extends javax.swing.JFrame {
         });
     }
 
-    
+    private MediaDatabase mediaDatabase;
     private Media newMedia;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DisplayLabel;
@@ -155,6 +189,8 @@ public class AddReviewGui extends javax.swing.JFrame {
     private javax.swing.JTextField ReviewField;
     private javax.swing.JButton cancelBTN;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextArea responseText;
     private javax.swing.JButton submitBTN;
     // End of variables declaration//GEN-END:variables
 }

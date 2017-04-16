@@ -193,6 +193,18 @@ public class MediaDatabase {
         System.out.println("No books found with that title");
         return null;
     }
+    
+    public ArrayList<Media> findListByGenre(ArrayList<Media> genreList){
+        ArrayList<Media> tempList = new ArrayList<>();
+        for (Media media : publicMediaList){
+            for (Media searchMedia : genreList){
+                if (media.getGenre().toLowerCase().equals(searchMedia.getGenre().toLowerCase())){
+                    tempList.add(media);
+                }
+            }
+        }
+        return tempList;
+    }
 
     void printList() {
             for (Media book : publicMediaList){
@@ -200,14 +212,11 @@ public class MediaDatabase {
             book.toString());
         }
     }
-
-    public ArrayList<Media> sortByTitle(ArrayList<Media> toBeSorted){
-        ArrayList<Media> sortedList;
-        sortedList = toBeSorted;
-        return sortedList;
-    }
     
     Media getMediaAtIndex(int mediaIndex) {
+        if (mediaIndex >= 0){
                return publicMediaList.get(mediaIndex);
+        } else
+            return null;
     }
 }

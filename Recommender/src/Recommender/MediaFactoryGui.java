@@ -96,12 +96,32 @@ public class MediaFactoryGui extends javax.swing.JFrame {
         jLabel2.setText("Author");
 
         MusicRB.setText("Music");
+        MusicRB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MusicRBMouseClicked(evt);
+            }
+        });
 
         BookRB.setText("Book");
+        BookRB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BookRBMouseClicked(evt);
+            }
+        });
 
         VideoGameRB.setText("Video Game");
+        VideoGameRB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                VideoGameRBMouseClicked(evt);
+            }
+        });
 
         MovieRB.setText("Movie");
+        MovieRB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MovieRBMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,7 +144,7 @@ public class MediaFactoryGui extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MovieRB)
+                .addComponent(MovieRB, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BookRB)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -134,7 +154,7 @@ public class MediaFactoryGui extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {BookRB, MovieRB, MusicRB, VideoGameRB});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {BookRB, MusicRB, VideoGameRB});
 
         jLabel3.setText("Year Published");
 
@@ -308,19 +328,19 @@ public class MediaFactoryGui extends javax.swing.JFrame {
            media.setPublisher(PublisherField.getText());
            media.setGenre(GenreField.getText());
            media.addReview(ReviewField.getText(), Integer.parseInt(RatingField.getText()));
-           if (TagField1.getText() != ""){
+           if (!TagField1.getText().equals("")){
                media.addTag(TagField1.getText());
            }
-            if (TagField2.getText() != ""){
+            if (!TagField2.getText().equals("")){
                media.addTag(TagField2.getText());
            }
-            if (TagField3.getText() != ""){
+            if (!TagField3.getText().equals("")){
                media.addTag(TagField3.getText());
            }
-            if (TagField4.getText() != ""){
+            if (!TagField4.getText().equals("")){
                media.addTag(TagField4.getText());
            }
-            if (TagField5.getText() != ""){
+            if (!TagField5.getText().equals("")){
                media.addTag(TagField5.getText());
            }
             
@@ -362,6 +382,34 @@ public class MediaFactoryGui extends javax.swing.JFrame {
     private void GenreFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenreFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_GenreFieldActionPerformed
+
+    private void MovieRBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MovieRBMouseClicked
+       MovieRB.setSelected(true);
+       BookRB.setSelected(false);
+       MusicRB.setSelected(false);
+       VideoGameRB.setSelected(false);
+    }//GEN-LAST:event_MovieRBMouseClicked
+
+    private void BookRBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BookRBMouseClicked
+       MovieRB.setSelected(false);
+       BookRB.setSelected(true);
+       MusicRB.setSelected(false);
+       VideoGameRB.setSelected(false);
+    }//GEN-LAST:event_BookRBMouseClicked
+
+    private void VideoGameRBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VideoGameRBMouseClicked
+        MovieRB.setSelected(false);
+       BookRB.setSelected(false);
+       MusicRB.setSelected(false);
+       VideoGameRB.setSelected(true);
+    }//GEN-LAST:event_VideoGameRBMouseClicked
+
+    private void MusicRBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MusicRBMouseClicked
+       MovieRB.setSelected(false);
+       BookRB.setSelected(false);
+       MusicRB.setSelected(true);
+       VideoGameRB.setSelected(false);
+    }//GEN-LAST:event_MusicRBMouseClicked
 
     /**
      * @param args the command line arguments

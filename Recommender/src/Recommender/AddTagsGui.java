@@ -29,11 +29,6 @@ public class AddTagsGui extends javax.swing.JFrame {
         taggedMedia = media;
         resetList();
     }
-
-    
-    public void getTags(){
-       
-    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,11 +122,11 @@ public class AddTagsGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addTagBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTagBTNActionPerformed
-      
-        resetList();
-        if (!taggedMedia.getTags().contains(jTextField1.getText())){
+       
+        if (!taggedMedia.getTags().contains(jTextField1.getText()) && !jTextField1.getText().equals("")){
            taggedMedia.addTag(jTextField1.getText());
        }
+        resetList();
     }//GEN-LAST:event_addTagBTNActionPerformed
 
     private void cancelBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBTNActionPerformed
@@ -180,8 +175,9 @@ public class AddTagsGui extends javax.swing.JFrame {
             dlmLeft.addElement(string);
         }
         tagsList.setModel(dlmLeft);
-        this.repaint();
         this.validate();
+        this.repaint();
+        
     }
     
     private DefaultListModel dlmLeft;
