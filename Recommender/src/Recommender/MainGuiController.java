@@ -63,12 +63,7 @@ public class MainGuiController extends javax.swing.JFrame {
         viewPublicListBTN = new javax.swing.JButton();
         viewRecommendationsBTN = new javax.swing.JButton();
         removeFromListBTN = new javax.swing.JButton();
-        menuBar = new javax.swing.JMenuBar();
-        listMenu = new javax.swing.JMenu();
-        publicListMenu = new javax.swing.JMenuItem();
-        wishListMenu = new javax.swing.JMenuItem();
-        accountMenu = new javax.swing.JMenu();
-        logoutMenu = new javax.swing.JMenuItem();
+        logoutBTN = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Recommender Main Screen");
@@ -180,6 +175,13 @@ public class MainGuiController extends javax.swing.JFrame {
             }
         });
 
+        logoutBTN.setText("Logout");
+        logoutBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBTNActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PublicListViewLayout = new javax.swing.GroupLayout(PublicListView);
         PublicListView.setLayout(PublicListViewLayout);
         PublicListViewLayout.setHorizontalGroup(
@@ -204,14 +206,16 @@ public class MainGuiController extends javax.swing.JFrame {
                 .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(searchBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(searchField))
-                .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(PublicListViewLayout.createSequentialGroup()
                         .addGap(73, 73, 73)
                         .addComponent(jLabel3)
-                        .addGap(202, 202, 202)
+                        .addGap(129, 129, 129)
                         .addComponent(viewPublicListBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(viewRecommendationsBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(logoutBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PublicListViewLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
@@ -230,12 +234,13 @@ public class MainGuiController extends javax.swing.JFrame {
                         .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(viewPublicListBTN)
-                                .addComponent(viewRecommendationsBTN))
+                                .addComponent(viewRecommendationsBTN)
+                                .addComponent(logoutBTN))
                             .addComponent(jLabel3))
                         .addGap(19, 19, 19)
                         .addComponent(MainSplitPane, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PublicListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(DisplayText))))
                 .addGap(2, 2, 2)
@@ -259,69 +264,10 @@ public class MainGuiController extends javax.swing.JFrame {
 
         getContentPane().add(MainView, "card2");
 
-        menuBar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menuBar.setForeground(new java.awt.Color(255, 255, 255));
-
-        listMenu.setText("Lists");
-        listMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listMenuActionPerformed(evt);
-            }
-        });
-
-        publicListMenu.setText("View Public List");
-        publicListMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicListMenuActionPerformed(evt);
-            }
-        });
-        listMenu.add(publicListMenu);
-
-        wishListMenu.setText("View Recommendations");
-        wishListMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                wishListMenuActionPerformed(evt);
-            }
-        });
-        listMenu.add(wishListMenu);
-
-        menuBar.add(listMenu);
-
-        accountMenu.setText("Account");
-        accountMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                accountMenuActionPerformed(evt);
-            }
-        });
-
-        logoutMenu.setText("Logout");
-        logoutMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutMenuActionPerformed(evt);
-            }
-        });
-        accountMenu.add(logoutMenu);
-
-        menuBar.add(accountMenu);
-
-        setJMenuBar(menuBar);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void listMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listMenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_listMenuActionPerformed
-
-    private void publicListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicListMenuActionPerformed
-
-    }//GEN-LAST:event_publicListMenuActionPerformed
-
     
-    private void wishListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wishListMenuActionPerformed
-
-    }//GEN-LAST:event_wishListMenuActionPerformed
-
     private void createNewBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewBTNActionPerformed
         MainDescriptionText.setText("Use the popup window to create a new media");
         MediaFactoryGui mediaFactoryGui = new MediaFactoryGui();
@@ -376,6 +322,10 @@ public class MainGuiController extends javax.swing.JFrame {
     }//GEN-LAST:event_addToMainBTNActionPerformed
 
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
+        changedManually = true;
+        RightMainList.clearSelection();
+        setRightList(MediaListManager.getMediaList());
+        changedManually = false;
         int i = 0;
         Boolean found = false;
         // searches the public list and displays on right.
@@ -529,19 +479,11 @@ public class MainGuiController extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeFromListBTNActionPerformed
 
-    private void accountMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountMenuActionPerformed
-         // This function does Nothing
-    }//GEN-LAST:event_accountMenuActionPerformed
-
-    /*
-    *
-    */
-    private void logoutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuActionPerformed
-        LoginGuiController loginGui;
-        loginGui = new LoginGuiController();
-        loginGui.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_logoutMenuActionPerformed
+    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
+       LoginGuiController lgc = new LoginGuiController();
+       lgc.setVisible(true);
+       this.setVisible(false);
+    }//GEN-LAST:event_logoutBTNActionPerformed
 
     private void updateLeftList(){
            int i = 1;
@@ -683,7 +625,6 @@ public class MainGuiController extends javax.swing.JFrame {
     private javax.swing.JPanel MainView;
     private javax.swing.JPanel PublicListView;
     private javax.swing.JList<String> RightMainList;
-    private javax.swing.JMenu accountMenu;
     private javax.swing.JButton addToMainBTN;
     private javax.swing.JButton createNewBTN;
     private javax.swing.JLabel jLabel3;
@@ -691,16 +632,12 @@ public class MainGuiController extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JMenu listMenu;
-    private javax.swing.JMenuItem logoutMenu;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem publicListMenu;
+    private javax.swing.JButton logoutBTN;
     private javax.swing.JButton removeFromListBTN;
     private javax.swing.JButton searchBTN;
     private javax.swing.JTextField searchField;
     private javax.swing.JButton viewPublicListBTN;
     private javax.swing.JButton viewRecommendationsBTN;
-    private javax.swing.JMenuItem wishListMenu;
     // End of variables declaration//GEN-END:variables
 
 

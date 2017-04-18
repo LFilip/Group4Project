@@ -44,7 +44,7 @@ public class AddReviewGui extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         responseText = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Rating out of 5");
 
@@ -134,6 +134,8 @@ public class AddReviewGui extends javax.swing.JFrame {
         if (Integer.parseInt(RatingField.getText()) > 0 && Integer.parseInt(RatingField.getText()) < 6){
         newMedia.addReview(ReviewField.getText(), Integer.parseInt(RatingField.getText()));
         mediaDatabase.saveList();
+        responseText.setText("Review Added.");
+        this.setVisible(false);
         }
         else {
             responseText.setText("Between 1 and 5 please");
