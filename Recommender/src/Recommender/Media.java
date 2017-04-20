@@ -37,7 +37,9 @@ public class Media implements Serializable {
         }
         return (totalRating / reviewTotal);
     }
-    
+
+
+
      /**
      *
      */

@@ -6,6 +6,7 @@
 package Recommender;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
 
@@ -498,6 +499,7 @@ public class MainGuiController extends javax.swing.JFrame {
      */
     
     private void setRightList(ArrayList<Media> newList){
+        Collections.sort(newList, Sorter.RatingHighComparator);
         RightArrayList = newList;
         dlmRight.removeAllElements();
         int i = 1;
@@ -522,6 +524,10 @@ public class MainGuiController extends javax.swing.JFrame {
 
     }
     
+    public void sortList(ArrayList<Media> mediaArray){
+        
+        Collections.sort(mediaArray, Sorter.RatingHighComparator);
+    }
     /**
      *
      * @return returns the instance of this class that it created at the beginning
